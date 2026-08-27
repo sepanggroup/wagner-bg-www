@@ -15,7 +15,7 @@ export const EXTRA_PRODUCTS = [
     imageUrl: 'https://cdn.wagner-group.com/fileadmin/produkte/1_Professional_Finishing/Kolbenpumpen_Connect/PS_339/2431358_PS3-39-emulsion_product-shot_left.jpg',
     referenceUrl: 'https://www.onlinemashini.bg/bezvuzdushna-mashina-za-boyadisvane-wagner-prospray-339-connect-emulsion/121369',
     officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/prospray-339-connect-emulsion/',
-    videoUrl: 'https://www.youtube.com/watch?v=Q6nY0t0hQ3A',
+    videoUrl: 'https://yt.wagner-group.com/ps-339-connect-dispersion',
     specs: ['Мощност: 2,185 kW', 'Макс. дебит: 5,0 l/min', 'Работно налягане: 221 bar', 'Макс. дюза: 0,039″', 'Тегло: 50 kg', '230 V / 50 Hz', 'IntelliSync + SprayManager', 'Подготовка за работа с до 2 пистолета с подходяща конфигурация']
   }
 ];
