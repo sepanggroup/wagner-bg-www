@@ -17,7 +17,8 @@ assert.match(index, /terms\.html/);
 assert.match(index, /cookies\.html/);
 assert.match(index, /application\/ld\+json/);
 assert.match(products, /WAGNER/);
-assert.match(products, /priceKnown: false/);
+assert.match(products, /priceType: 'market-reference'/);
+assert.match(products, /priceKnown: true/);
 assert.match(payment, /PayPal/);
 assert.match(payment, /payment-config\.js/);
 assert.doesNotMatch(products, /sepang-tech-group/);
@@ -26,8 +27,8 @@ assert.doesNotMatch(payment, /ncp\/payment\/FGNHSNGS24CNQ/);
 assert.doesNotMatch(app, /kolmaneood@[a-z0-9.-]+/i, 'Business email belongs in product configuration, not application logic');
 
 for (const [file, required] of [
-  ['products.js', ['SuperFinish 21 Pro HEA', 'FinishControl 3500', 'ProSpray 3.39 Connect Filler', 'SuperFinish 23 Plus HEA']],
-  ['app.js', ['specs', 'product-specs']],
+  ['products.js', ['SuperFinish 21 Pro HEA', 'SuperFinish 23 Pro Cart HEA', 'ProSpray 3.25 Spraypack Cart', 'SuperFinish 33 Pro', 'FinishControl 4000 18V', 'VectorPro 4 Finger Professional']],
+  ['app.js', ['specs', 'priceBlock']]
 ]) {
   const text = read(file);
   for (const token of required) assert.match(text, new RegExp(token.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')));
