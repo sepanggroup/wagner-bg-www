@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const index = read('index.html');
 const products = read('products.js');
 const robots = read('robot-products.js');
+const images = read('image-overrides.js');
 const payment = read('payment.js');
 const merchant = read('merchant-config.js');
 const cart = read('cart.js');
@@ -22,7 +23,7 @@ assert.match(index, /terms\.html/);
 assert.match(index, /cookies\.html/);
 assert.match(index, /application\/ld\+json/);
 assert.match(index, /SEPANG GROUP ЕООД/);
-assert.match(index, /Техника, която <em>работи за вас\.<\/em>/);
+assert.match(index, /Техниката, която <em>работи за вас\.<\/em>/);
 assert.match(index, /\+359 88 503 9931/);
 assert.match(index, /КУПИ/);
 assert.match(index, /cart-drawer/);
@@ -42,13 +43,29 @@ assert.doesNotMatch(products, /\+359 88 579 66 13/);
 assert.match(robots, /ROBOT_CATEGORY/);
 assert.match(robots, /ROBOT_PRODUCTS/);
 assert.match(robots, /Kaifeng Yucheng/);
-assert.match(robots, /95000/);
-assert.match(robots, /165000/);
+assert.match(robots, /Smart Build Robotics/);
 assert.match(robots, /Partner Robotics P900/);
-assert.match(robots, /Legend Robotics/);
-const robotImageUrls = [...robots.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1]);
-assert.equal(robotImageUrls.length, 6, 'Robot catalog must contain six product photos');
-assert.equal(new Set(robotImageUrls).size, 6, 'Each robot listing must use a distinct photo URL');
+assert.match(robots, /Fangshi Ceramic Floor Tile Laying Robot/);
+assert.match(robots, /Fangshi Stone Tile Laying Robot/);
+assert.match(robots, /Zhuling TLR/);
+assert.match(robots, /Bright Dream Robotics R-19/);
+assert.match(robots, /description:/);
+assert.match(robots, /лепило/);
+
+const robotImageUrls = [...images.matchAll(/'([^']+)':\s*'([^']+)'/g)].map((m) => m[2]);
+assert.ok(robotImageUrls.length >= 11, 'Robot catalog image map must cover every robot listing');
+assert.equal(new Set(robotImageUrls).size, robotImageUrls.length, 'Each mapped robot listing must use a distinct photo URL');
+assert.match(images, /partner-p900/);
+assert.match(images, /fangshi-ceramic-tile-robot/);
+assert.match(images, /fangshi-stone-tile-robot/);
+assert.match(images, /zhuling-tlr/);
+assert.match(images, /bright-dream-r19/);
+assert.match(images, /smartbuild-thinset-robot/);
+assert.match(images, /derutu-tile-laying-robot/);
+assert.match(images, /yanling-tile-robot/);
+assert.match(images, /kaifeng-yucheng-automatic-tile-robot/);
+assert.match(images, /bossgoo-intelligent-tile-robot/);
+assert.match(images, /bossgoo-palletizer-tile-robot/);
 assert.doesNotMatch(robots, /КОЛМАН ЕООД/);
 assert.doesNotMatch(robots, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(robots, /\+359 88 579 66 13/);
@@ -80,15 +97,17 @@ assert.match(app, /updateCartUI/);
 assert.match(app, /cart-drawer/);
 assert.match(app, /КУПИ/);
 assert.match(app, /imageSrc/);
+assert.match(app, /imageUrlFor/);
 assert.match(app, /formatPrice/);
 assert.match(app, /ROBOT_PRODUCTS/);
+assert.match(app, /product\.description/);
 assert.doesNotMatch(app, /КОЛМАН ЕООД/);
 assert.doesNotMatch(app, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(app, /\+359 88 579 66 13/);
 
 for (const [file, required] of [
   ['products.js', ['SuperFinish 21 Pro HEA', 'SuperFinish 23 Pro Cart HEA', 'ProSpray 3.25 Spraypack Cart', 'SuperFinish 33 Pro', 'FinishControl 4000 18V', 'VectorPro 4 Finger Professional']],
-  ['app.js', ['specs', 'formatPrice', 'imageSrc', 'addToCart', 'updateCartUI', 'КУПИ']],
+  ['app.js', ['specs', 'formatPrice', 'imageSrc', 'imageUrlFor', 'addToCart', 'updateCartUI', 'КУПИ']],
   ['cart.js', ['loadCart', 'saveCart', 'cartSubtotal']]
 ]) {
   const text = read(file);
