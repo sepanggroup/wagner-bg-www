@@ -1,0 +1,8 @@
+{
+  "name": "wagner-bg-www",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/source-integrity.test.mjs"
+  }
+}
