@@ -39,7 +39,12 @@ function renderProducts(){
         <p>${escapeHtml(product.blurb)}</p>
         ${product.specs?.length ? `<ul class="product-specs">${product.specs.map((spec)=>`<li>${escapeHtml(spec)}</li>`).join('')}</ul>` : ''}
         <div class="product-footer">
-          <span class="price-inquiry">${product.priceKnown ? `€${Number(product.price).toFixed(2)}` : 'Цена при запитване'}</span>
+          <div class="price-block">
+            <span class="price-label">${product.priceKnown ? 'Ориентировъчна цена' : 'Цена'}</span>
+            <strong class="price-inquiry">${product.priceKnown ? `€${Number(product.price).toFixed(2)}` : 'По запитване'}</strong>
+            ${product.priceKnown && product.priceNote ? `<small class="price-note">${escapeHtml(product.priceNote)}</small>` : ''}
+            ${product.priceKnown && product.priceSource ? `<small class="price-source">Източник: ${escapeHtml(product.priceSource)}</small>` : ''}
+          </div>
           <button class="btn btn-dark select-product" type="button" data-product="${escapeHtml(product.id)}">${state.selected.has(product.id) ? 'Добавен ✓' : 'Добави'}</button>
         </div>
       </div>
