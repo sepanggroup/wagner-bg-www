@@ -30,6 +30,7 @@ assert.doesNotMatch(index, /КОЛМАН ЕООД/);
 assert.doesNotMatch(index, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
 
+assert.match(products, /SEPANG GROUP ЕООД/);
 assert.match(products, /WAGNER/);
 assert.match(products, /priceType: 'market-reference'/);
 assert.match(products, /priceKnown: true/);
@@ -45,14 +46,16 @@ assert.match(robots, /95000/);
 assert.match(robots, /165000/);
 assert.match(robots, /Partner Robotics P900/);
 assert.match(robots, /Legend Robotics/);
-assert.ok((robots.match(/imageUrl:/g) || []).length >= 6, 'Robot catalog must contain product photography for every listing');
-assert.equal(new Set([...robots.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1])).size, 6, 'Each robot listing must use a distinct photo URL');
+const robotImageUrls = [...robots.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1]);
+assert.equal(robotImageUrls.length, 6, 'Robot catalog must contain six product photos');
+assert.equal(new Set(robotImageUrls).size, 6, 'Each robot listing must use a distinct photo URL');
 assert.doesNotMatch(robots, /КОЛМАН ЕООД/);
 assert.doesNotMatch(robots, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(robots, /\+359 88 579 66 13/);
 
 assert.match(merchant, /SEPANG GROUP ЕООД/);
 assert.match(merchant, /sepanggroupltd@gmail\.com/);
+assert.match(merchant, /\+359 88 503 9931/);
 assert.match(merchant, /PAYPAL_CLIENT_ID/);
 assert.doesNotMatch(merchant, /КОЛМАН ЕООД/);
 assert.doesNotMatch(merchant, /kolmaneood@abv\.bg/i);
