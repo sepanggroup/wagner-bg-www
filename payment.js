@@ -1,4 +1,4 @@
-const PAYPAL_CLIENT_ID = window.WAGNER_PAYPAL_CLIENT_ID || '';
+import { PAYPAL_CLIENT_ID } from './payment-config.js';
 
 export function initAgreementPayment(){
   const amountInput = document.querySelector('#agreed-amount');
