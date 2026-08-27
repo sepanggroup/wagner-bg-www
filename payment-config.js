@@ -1,3 +1,2 @@
-// Public PayPal client configuration for this storefront.
-// Keep this value empty until the PayPal Business application belonging to КОЛМАН ЕООД is confirmed.
+// Deprecated compatibility module. PayPal configuration for WAGNER-BG lives in merchant-config.js.
 export const PAYPAL_CLIENT_ID = '';
