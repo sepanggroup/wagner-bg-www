@@ -3,7 +3,7 @@ import { ROBOT_CATEGORY, ROBOT_PRODUCTS } from './robot-products.js';
 import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount, cartSubtotal, cartHasNonPurchasableItems, cartMailtoSubject, cartMailtoBody } from './cart.js';
 import { initCartPayment } from './payment.js';
 
-const CATEGORIES = [...STORE.categories, ROBOT_CATEGORY];
+const CATEGORIES = [...STORE.categories.filter((item) => item.id !== 'robots'), ROBOT_CATEGORY];
 const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS];
 
 const qs = (selector) => document.querySelector(selector);
@@ -18,15 +18,21 @@ const cartSubtotalEl = qs('#cart-subtotal');
 const cartNote = qs('#cart-note');
 const checkoutButton = qs('#checkout-cart');
 
-function allProducts(){ return PRODUCTS; }
 function productById(id){ return getProduct(id) || PRODUCTS.find((item) => item.id === id); }
 function categoryById(id){ return getCategory(id) || CATEGORIES.find((item) => item.id === id); }
 function formatPrice(product){
-  if (!product.priceKnown || !Number.isFinite(product.price)) return 'По оферта';
+  if (!product.priceKnown || !Number.isFinite(product.price)) {
+    if (Number.isFinite(product.priceMin) && Number.isFinite(product.priceMax)) return `$${Number(product.priceMin).toLocaleString('en-US')}–$${Number(product.priceMax).toLocaleString('en-US')}`;
+    return 'По оферта';
+  }
   const symbol = product.priceCurrency === 'USD' ? '$' : '€';
   const number = (value) => Number(value).toLocaleString('bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  if (Number.isFinite(product.priceMin) && Number.isFinite(product.priceMax)) return `${symbol}${number(product.priceMin)}–${number(product.priceMax)}`;
   return `${symbol}${number(product.price)}`;
+}
+function imageSrc(product){
+  if (!product.imageUrl) return '';
+  const encoded = encodeURIComponent(product.imageUrl);
+  return `https://images.weserv.nl/?url=${encoded}`;
 }
 function escapeHtml(value){ return String(value).replace(/[&<>'"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[c])); }
 
@@ -58,15 +64,16 @@ function renderCategories(){
 function renderProducts(){
   const query = qs('#search')?.value.trim().toLowerCase() || '';
   const category = qs('#category-filter')?.value || 'all';
-  const filtered = allProducts().filter((product) => {
+  const filtered = PRODUCTS.filter((product) => {
     const haystack = `${product.name} ${product.model || ''} ${product.eyebrow || ''} ${product.blurb || ''} ${(product.specs || []).join(' ')} ${categoryById(product.category)?.name || ''}`.toLowerCase();
     return (!query || haystack.includes(query)) && (category === 'all' || product.category === category);
   });
   const cart = loadCart();
   productGrid.innerHTML = filtered.length ? filtered.map((product) => {
     const inCart = cart.find((item) => item.id === product.id)?.quantity || 0;
+    const src = imageSrc(product);
     return `<article class="product-card">
-      <div class="product-art" aria-label="${escapeHtml(product.name)}">${product.imageUrl ? `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="shape"><span>${escapeHtml((product.model || 'WAGNER').slice(0,18))}</span></div>`}</div>
+      <div class="product-art" aria-label="${escapeHtml(product.name)}">${src ? `<img src="${escapeHtml(src)}" data-original-image="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="shape"><span>${escapeHtml((product.model || 'WAGNER').slice(0,18))}</span></div>`}</div>
       <div class="product-body">
         <small>${escapeHtml(product.eyebrow || '')}</small>
         <h3>${escapeHtml(product.name)}</h3>
@@ -85,6 +92,10 @@ function renderProducts(){
     </article>`;
   }).join('') : '<p>Няма намерени продукти.</p>';
 
+  productGrid.querySelectorAll('.product-art img').forEach((img) => img.addEventListener('error', () => {
+    const original = img.dataset.originalImage;
+    if (original && img.src !== original) img.src = original;
+  }, { once: true }));
   productGrid.querySelectorAll('.buy-product').forEach((button) => button.addEventListener('click', () => {
     addToCart(button.dataset.product);
     updateCartUI();
@@ -103,7 +114,7 @@ function renderCart(){
     cartEmpty.hidden = true;
     cartItems.innerHTML = items.map(({ entry, product }) => `
       <div class="cart-item">
-        <div class="cart-item-image">${product.imageUrl ? `<img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}">` : ''}</div>
+        <div class="cart-item-image">${product.imageUrl ? `<img src="${escapeHtml(imageSrc(product))}" alt="${escapeHtml(product.name)}" loading="lazy">` : ''}</div>
         <div class="cart-item-main"><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(formatPrice(product))}</span><div class="cart-qty"><button type="button" data-minus="${escapeHtml(product.id)}">−</button><span>${entry.quantity}</span><button type="button" data-plus="${escapeHtml(product.id)}">+</button></div></div>
         <button type="button" class="cart-remove" data-remove="${escapeHtml(product.id)}" aria-label="Премахни ${escapeHtml(product.name)}">×</button>
       </div>`).join('');
@@ -119,7 +130,6 @@ function renderCart(){
 }
 
 function updateCartUI(){ renderCart(); initCartPayment(productById); }
-
 function setupMenu(){
   const menu = qs('.menu'); const nav = qs('#main-nav');
   menu?.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', String(open)); });
@@ -129,9 +139,9 @@ function setupContact(){
   qs('#contact-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const subject = encodeURIComponent(`Поръчка / запитване WAGNER-BG — ${data.get('name') || ''}`);
-    const body = encodeURIComponent(`${data.get('message') || ''}\n\nКошница:\n${cartMailtoBody(productById)}`);
-    window.location.href = `mailto:sepanggroupltd@gmail.com?subject=${subject || cartMailtoSubject()}&body=${body}`;
+    const subject = encodeURIComponent(`Поръчка WAGNER-BG — ${data.get('name') || ''}`);
+    const body = encodeURIComponent(`${data.get('message') || ''}\n\nКошница:\n${decodeURIComponent(cartMailtoBody(productById))}`);
+    window.location.href = `mailto:sepanggroupltd@gmail.com?subject=${subject}&body=${body}`;
   });
 }
 
@@ -140,14 +150,13 @@ qs('#hero-cart')?.addEventListener('click', openCart);
 qs('#close-cart')?.addEventListener('click', closeCart);
 cartOverlay?.addEventListener('click', closeCart);
 qs('#checkout-cart')?.addEventListener('click', () => {
-  if (!checkoutButton.disabled) document.querySelector('#payment')?.scrollIntoView({ behavior: 'smooth' });
+  if (!checkoutButton.disabled) qs('#payment')?.scrollIntoView({ behavior: 'smooth' });
   closeCart();
 });
 qs('#search')?.addEventListener('input', renderProducts);
 qs('#category-filter')?.addEventListener('change', renderProducts);
 qs('#cart-clear')?.addEventListener('click', () => { clearCart(); updateCartUI(); });
 window.addEventListener('wagner-cart-updated', () => { updateCartUI(); renderProducts(); });
-
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeCart(); });
 
 renderCategories();
