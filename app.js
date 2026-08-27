@@ -26,7 +26,7 @@ function renderProducts(){
   const query = qs('#search').value.trim().toLowerCase();
   const category = qs('#category-filter').value;
   const filtered = STORE.products.filter((product) => {
-    const matchesQuery = !query || `${product.name} ${product.eyebrow} ${getCategory(product.category)?.name || ''}`.toLowerCase().includes(query);
+    const matchesQuery = !query || `${product.name} ${product.eyebrow} ${product.blurb} ${(product.specs || []).join(' ')} ${getCategory(product.category)?.name || ''}`.toLowerCase().includes(query);
     const matchesCategory = category === 'all' || product.category === category;
     return matchesQuery && matchesCategory;
   });
@@ -37,6 +37,7 @@ function renderProducts(){
         <small>${escapeHtml(product.eyebrow)}</small>
         <h3>${escapeHtml(product.name)}</h3>
         <p>${escapeHtml(product.blurb)}</p>
+        ${product.specs?.length ? `<ul class="product-specs">${product.specs.map((spec)=>`<li>${escapeHtml(spec)}</li>`).join('')}</ul>` : ''}
         <div class="product-footer">
           <span class="price-inquiry">${product.priceKnown ? `€${Number(product.price).toFixed(2)}` : 'Цена при запитване'}</span>
           <button class="btn btn-dark select-product" type="button" data-product="${escapeHtml(product.id)}">${state.selected.has(product.id) ? 'Добавен ✓' : 'Добави'}</button>
@@ -57,7 +58,7 @@ function renderSelected(){
   cartCount.textContent = String(state.selected.size);
   const items = [...state.selected].map(getProduct).filter(Boolean);
   selectedEmpty.style.display = items.length ? 'none' : 'block';
-  selectedList.innerHTML = items.map((p) => `<div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #d9ddd8"><strong>${escapeHtml(p.name)}</strong><button type="button" class="remove-product" data-product="${escapeHtml(p.id)}">Премахни</button></div>`).join('');
+  selectedList.innerHTML = items.map((p) => `<div class="selected-row"><strong>${escapeHtml(p.name)}</strong><button type="button" class="remove-product" data-product="${escapeHtml(p.id)}">Премахни</button></div>`).join('');
   selectedList.querySelectorAll('.remove-product').forEach((button) => button.addEventListener('click', () => {
     state.selected.delete(button.dataset.product);
     saveSelection(); renderSelected(); renderProducts();
