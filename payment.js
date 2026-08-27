@@ -1,58 +1,59 @@
-import { PAYPAL_CLIENT_ID } from './payment-config.js';
+import { PAYPAL_CLIENT_ID } from './merchant-config.js';
+import { loadCart, cartSubtotal, cartHasNonPurchasableItems } from './cart.js';
 
-export function initAgreementPayment(){
-  const amountInput = document.querySelector('#agreed-amount');
+let paypalRendered = false;
+
+export function initCartPayment(productById){
   const container = document.querySelector('#paypal-button-container');
   const status = document.querySelector('#paypal-status');
-  if (!amountInput || !container || !status) return;
-
-  const renderUnavailable = (message) => {
-    container.innerHTML = '';
-    const note = document.createElement('div');
-    note.className = 'paypal-status';
-    note.textContent = message;
-    container.appendChild(note);
-  };
+  if (!container || !status || paypalRendered) return;
 
   if (!PAYPAL_CLIENT_ID) {
-    renderUnavailable('За live PayPal плащане е необходим Client ID от PayPal Business акаунта на КОЛМАН ЕООД.');
-    return;
-  }
-
-  if (!/^A[A-Za-z0-9_-]{10,}$/.test(PAYPAL_CLIENT_ID)) {
-    renderUnavailable('PayPal Client ID има невалиден формат. Провери merchant настройките преди активиране.');
+    status.textContent = 'PayPal checkout е подготвен, но липсва Client ID за SEPANG GROUP ЕООД.';
     return;
   }
 
   loadPayPal(PAYPAL_CLIENT_ID).then(() => {
     if (!window.paypal) throw new Error('PayPal SDK unavailable');
+    paypalRendered = true;
     window.paypal.Buttons({
       style: { shape:'rect', color:'gold', layout:'vertical', label:'pay' },
       createOrder: (_data, actions) => {
-        const amount = Number(amountInput.value);
-        if (!Number.isFinite(amount) || amount < 1) {
-          amountInput.focus();
-          throw new Error('Enter an agreed amount of at least €1.00');
-        }
+        const cart = loadCart();
+        const subtotal = cartSubtotal(productById);
+        if (!cart.length) throw new Error('Cart is empty');
+        if (cartHasNonPurchasableItems(productById)) throw new Error('Cart contains quote-only or non-EUR items');
+        if (!Number.isFinite(subtotal) || subtotal <= 0) throw new Error('No payable EUR products in cart');
+        const items = cart.map((entry) => {
+          const product = productById(entry.id);
+          return {
+            name: product.name.slice(0, 127),
+            sku: product.model || product.id,
+            unit_amount: { currency_code: 'EUR', value: product.price.toFixed(2) },
+            quantity: String(entry.quantity)
+          };
+        });
         return actions.order.create({
-          purchase_units: [{ amount: { currency_code: 'EUR', value: amount.toFixed(2) }, description: 'Плащане по предварително договорена поръчка — КОЛМАН ЕООД' }]
+          purchase_units: [{
+            description: 'WAGNER-BG order — SEPANG GROUP ЕООД',
+            amount: { currency_code: 'EUR', value: subtotal.toFixed(2), breakdown: { item_total: { currency_code: 'EUR', value: subtotal.toFixed(2) } } },
+            items
+          }]
         });
       },
-      onApprove: (data) => {
-        status.textContent = `Плащането е одобрено. PayPal Order ID: ${data.orderID}`;
-      },
-      onError: () => {
-        status.textContent = 'PayPal не успя да обработи плащането. Проверете сумата и опитайте отново.';
-      }
+      onApprove: (data) => { status.textContent = `Плащането е одобрено. PayPal Order ID: ${data.orderID}`; },
+      onError: () => { status.textContent = 'PayPal не успя да обработи плащането. Проверете кошницата и опитайте отново.'; }
     }).render('#paypal-button-container');
-  }).catch(() => renderUnavailable('PayPal временно не е наличен. Опитайте отново по-късно.'));
+  }).catch(() => {
+    status.textContent = 'PayPal временно не е наличен. Опитайте отново по-късно.';
+  });
 }
 
 function loadPayPal(clientId){
   return new Promise((resolve, reject) => {
     if (window.paypal) return resolve();
     const existing = document.querySelector('script[data-wagner-paypal]');
-    if (existing) { existing.addEventListener('load', resolve, { once:true }); existing.addEventListener('error', reject, { once:true }); return; }
+    if (existing){ existing.addEventListener('load', resolve, { once:true }); existing.addEventListener('error', reject, { once:true }); return; }
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=EUR&intent=capture`;
     script.async = true;
