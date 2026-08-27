@@ -34,7 +34,7 @@ function imageSrc(product){
   const encoded = encodeURIComponent(product.imageUrl);
   return `https://images.weserv.nl/?url=${encoded}`;
 }
-function escapeHtml(value){ return String(value).replace(/[&<>'"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[c])); }
+function escapeHtml(value){ return String(value).replace(/[&<>'\"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '\"':'&quot;' }[c])); }
 
 function openCart(){
   cartDrawer?.classList.add('open');
@@ -65,7 +65,7 @@ function renderProducts(){
   const query = qs('#search')?.value.trim().toLowerCase() || '';
   const category = qs('#category-filter')?.value || 'all';
   const filtered = PRODUCTS.filter((product) => {
-    const haystack = `${product.name} ${product.model || ''} ${product.eyebrow || ''} ${product.blurb || ''} ${(product.specs || []).join(' ')} ${categoryById(product.category)?.name || ''}`.toLowerCase();
+    const haystack = `${product.name} ${product.model || ''} ${product.eyebrow || ''} ${product.blurb || ''} ${product.description || ''} ${(product.specs || []).join(' ')} ${categoryById(product.category)?.name || ''}`.toLowerCase();
     return (!query || haystack.includes(query)) && (category === 'all' || product.category === category);
   });
   const cart = loadCart();
@@ -79,6 +79,7 @@ function renderProducts(){
         <h3>${escapeHtml(product.name)}</h3>
         ${product.model ? `<div class="model">Модел: ${escapeHtml(product.model)}</div>` : ''}
         <p>${escapeHtml(product.blurb || '')}</p>
+        ${product.description ? `<details class="product-details"><summary>Пълно описание</summary><div class="product-description">${escapeHtml(product.description)}</div></details>` : ''}
         ${product.specs?.length ? `<div class="specs">${product.specs.map((spec) => `<span>${escapeHtml(spec)}</span>`).join('')}</div>` : ''}
         <div class="product-footer">
           <div class="price-block"><span class="price-label">Цена</span><strong class="price-inquiry">${escapeHtml(formatPrice(product))}</strong></div>
@@ -95,6 +96,7 @@ function renderProducts(){
   productGrid.querySelectorAll('.product-art img').forEach((img) => img.addEventListener('error', () => {
     const original = img.dataset.originalImage;
     if (original && img.src !== original) img.src = original;
+    else img.closest('.product-art')?.classList.add('image-error');
   }, { once: true }));
   productGrid.querySelectorAll('.buy-product').forEach((button) => button.addEventListener('click', () => {
     addToCart(button.dataset.product);
