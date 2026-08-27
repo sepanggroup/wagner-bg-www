@@ -15,12 +15,15 @@ const cname = read('CNAME').trim();
 assert.match(index, /<html lang="bg">/);
 assert.match(index, /<link rel="canonical" href="https:\/\/www\.wagner-bg\.shop\/">/);
 assert.equal(cname, 'www.wagner-bg.shop');
+assert.match(index, /styles\.css\?v=/);
+assert.match(index, /cart\.css\?v=/);
 assert.match(index, /privacy\.html/);
 assert.match(index, /terms\.html/);
 assert.match(index, /cookies\.html/);
 assert.match(index, /application\/ld\+json/);
 assert.match(index, /SEPANG GROUP ЕООД/);
 assert.match(index, /Техника, която <em>работи за вас\.<\/em>/);
+assert.match(index, /\+359 88 503 9931/);
 assert.match(index, /КУПИ/);
 assert.match(index, /cart-drawer/);
 assert.doesNotMatch(index, /КОЛМАН ЕООД/);
@@ -43,6 +46,7 @@ assert.match(robots, /165000/);
 assert.match(robots, /Partner Robotics P900/);
 assert.match(robots, /Legend Robotics/);
 assert.ok((robots.match(/imageUrl:/g) || []).length >= 6, 'Robot catalog must contain product photography for every listing');
+assert.equal(new Set([...robots.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1])).size, 6, 'Each robot listing must use a distinct photo URL');
 assert.doesNotMatch(robots, /КОЛМАН ЕООД/);
 assert.doesNotMatch(robots, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(robots, /\+359 88 579 66 13/);
@@ -72,7 +76,7 @@ assert.match(app, /addToCart/);
 assert.match(app, /updateCartUI/);
 assert.match(app, /cart-drawer/);
 assert.match(app, /КУПИ/);
-assert.match(app, /imageUrl/);
+assert.match(app, /imageSrc/);
 assert.match(app, /formatPrice/);
 assert.match(app, /ROBOT_PRODUCTS/);
 assert.doesNotMatch(app, /КОЛМАН ЕООД/);
@@ -81,7 +85,7 @@ assert.doesNotMatch(app, /\+359 88 579 66 13/);
 
 for (const [file, required] of [
   ['products.js', ['SuperFinish 21 Pro HEA', 'SuperFinish 23 Pro Cart HEA', 'ProSpray 3.25 Spraypack Cart', 'SuperFinish 33 Pro', 'FinishControl 4000 18V', 'VectorPro 4 Finger Professional']],
-  ['app.js', ['specs', 'formatPrice', 'imageUrl', 'addToCart', 'updateCartUI']],
+  ['app.js', ['specs', 'formatPrice', 'imageSrc', 'addToCart', 'updateCartUI', 'КУПИ']],
   ['cart.js', ['loadCart', 'saveCart', 'cartSubtotal']]
 ]) {
   const text = read(file);
