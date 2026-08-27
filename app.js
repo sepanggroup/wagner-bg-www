@@ -84,7 +84,7 @@ function setupContact(){
       `Фирма: ${data.get('company') || ''}`,
       '', String(data.get('message') || '')
     ].join('\n'));
-    window.location.href = `mailto:kolmaneood@abv.bg?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${STORE.company.email}?subject=${subject}&body=${body}`;
   });
 }
 
