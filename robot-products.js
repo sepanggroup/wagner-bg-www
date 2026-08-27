@@ -1,7 +1,7 @@
 export const ROBOT_CATEGORY = {
   id: 'robotics',
   name: 'Роботи за полагане на плочки',
-  desc: 'Автоматизирани системи за нанасяне на лепило/разтвор и последващо полагане на подови плочки.'
+  desc: 'Автоматизирани системи за нанасяне на лепило или разтвор и последващо полагане на подови плочки.'
 };
 
 export const ROBOT_PRODUCTS = [
@@ -16,12 +16,12 @@ export const ROBOT_PRODUCTS = [
     price: 80000,
     priceCurrency: 'USD',
     priceType: 'market-listing',
-    priceNote: 'Публикувана офертна цена; транспорт, мита, ДДС, конфигурация и доставка до България не са включени.',
+    priceNote: 'Публикувана офертна цена; транспорт, мита, ДДС, конфигурация и доставка до България се потвърждават отделно.',
     priceSource: 'Alibaba · Kaifeng Yucheng Precision Machinery Co., Ltd.',
     referenceUrl: 'https://www.alibaba.com/showroom/automatic-tile-laying-robot.html',
     imageUrl: 'https://s.alicdn.com/%40sc04/kf/H06cc4adfc42946918eb7c270df9593e6w/Automatic-Tile-Installation-Robot-Labor-saving-Floor-Tile-Laying-Machine-Smart-Construction-Robot-for-Tile-Paving.jpg',
     imageSource: 'Alibaba listing image',
-    specs: ['Цена: $80,000', 'MOQ: 1 машина', 'Автоматично полагане на плочки', 'Публична оферта от Kaifeng Yucheng']
+    specs: ['Цена: $80,000', 'MOQ: 1 машина', 'Автоматично полагане на плочки', 'Kaifeng Yucheng']
   },
   {
     id: 'bossgoo-intelligent-tile-robot',
@@ -29,18 +29,18 @@ export const ROBOT_PRODUCTS = [
     name: 'Intelligent Tile Laying Robot for Constructions',
     model: 'Bossgoo 68275621',
     eyebrow: 'SMART CONSTRUCTION ROBOT · SLAM',
-    blurb: 'Интегрирано нанасяне на лепило и полагане на подови плочки с лазерна SLAM навигация, визуално позициониране и разпределена вибрация.',
+    blurb: 'Интелигентен робот с интегрирано нанасяне на лепило и автоматично полагане на подови плочки.',
     priceKnown: true,
     priceMin: 95000,
     priceMax: 165000,
     priceCurrency: 'USD',
     priceType: 'market-listing',
-    priceNote: 'Публикуван диапазон от Bossgoo; крайната конфигурация и търговските условия се потвърждават преди покупка.',
+    priceNote: 'Публичен диапазон от Bossgoo; крайната конфигурация и търговските условия се потвърждават преди покупка.',
     priceSource: 'Bossgoo',
     referenceUrl: 'https://www.bossgoo.com/product-detail/intelligent-tile-laying-robot-for-constructions-68275621.html',
     imageUrl: 'https://s.alicdn.com/%40sc04/kf/H2d24226b3e6446c5bf54b466f8c5bdc6j/Tile-Automatic-Laying-Robot-High-Precision-Tile-Installation-Robot-High-Efficiency-for-Commercial-Buildings.jpg',
-    imageSource: 'Representative public listing image',
-    specs: ['Цена: $95,000–$165,000', 'Площ: над 30 m²', 'Плочки: 600×600 / 800×800 / 600×1200 mm', 'Лепило + полагане', 'Laser SLAM навигация', 'Четириточкова вибрация']
+    imageSource: 'Bossgoo/MROFED product listing image',
+    specs: ['Цена: $95,000–$165,000', 'Площ: над 30 m²', '600×600 / 800×800 / 600×1200 mm', 'Лепило + полагане', 'Laser SLAM', 'Четириточкова вибрация']
   },
   {
     id: 'bossgoo-palletizer-tile-robot',
@@ -48,18 +48,18 @@ export const ROBOT_PRODUCTS = [
     name: 'Palletizer Stacking Machine Robot Tile Laying Robot',
     model: 'Bossgoo 68275606',
     eyebrow: 'AUTOMATIC TILE PAVING · INDUSTRIAL ROBOT',
-    blurb: 'Автоматизирана конфигурация за полагане на плочки с интегрирано нанасяне на лепило и позициониране на плочката.',
+    blurb: 'Автоматизирана конфигурация за полагане на плочки с интегрирано нанасяне на лепило и визуално позициониране.',
     priceKnown: true,
     priceMin: 85000,
     priceMax: 155000,
     priceCurrency: 'USD',
     priceType: 'market-listing',
-    priceNote: 'Публикуван диапазон от Bossgoo; крайната конфигурация, транспортът и вносните разходи се потвърждават отделно.',
+    priceNote: 'Публичен диапазон от Bossgoo; транспортът и вносните разходи се потвърждават отделно.',
     priceSource: 'Bossgoo',
     referenceUrl: 'https://www.bossgoo.com/product-detail/palletizer-stacking-machine-robot-tile-laying-68275606.html',
     imageUrl: 'https://s.alicdn.com/%40sc04/kf/H55b621068c58427ba48bfa9c7adb842ag.png_640x640.png',
-    imageSource: 'Representative public listing image',
-    specs: ['Цена: $85,000–$155,000', 'Площ: над 30 m²', 'Плочки: 600×600 / 800×800 / 600×1200 mm', 'Лепило + полагане', 'Laser SLAM навигация', 'Визуално измерване на фугата']
+    imageSource: 'Bossgoo product listing image',
+    specs: ['Цена: $85,000–$155,000', 'Площ: над 30 m²', '600×600 / 800×800 / 600×1200 mm', 'Лепило + полагане', 'Laser SLAM', 'Измерване на фугата']
   },
   {
     id: 'mrofed-electric-tile-robot',
@@ -67,18 +67,18 @@ export const ROBOT_PRODUCTS = [
     name: 'Tile Laying Robot Electric for Construction Works',
     model: 'MROFED listing',
     eyebrow: 'CONSTRUCTION ROBOT · ELECTRIC',
-    blurb: 'Директна публична оферта с автоматично нанасяне на лепило и полагане на плочки за професионални строителни приложения.',
+    blurb: 'Електрически робот за автоматизирано нанасяне на лепило и полагане на подови плочки.',
     priceKnown: true,
     priceMin: 98000,
     priceMax: 165000,
     priceCurrency: 'USD',
     priceType: 'market-listing',
-    priceNote: 'Публикуван диапазон от MROFED; плащането в обявата е T/T и търговските условия се уточняват със доставчика.',
+    priceNote: 'Публикуван диапазон от MROFED; търговските условия, доставка и документация се потвърждават отделно.',
     priceSource: 'MROFED',
     referenceUrl: 'https://www.mrofed.com/dp-tile-laying-robot-k7347185.html',
-    imageUrl: 'https://s.alicdn.com/%40sc04/kf/H06cc4adfc42946918eb7c270df9593e6w/Automatic-Tile-Installation-Robot-Labor-saving-Floor-Tile-Laying-Machine-Smart-Construction-Robot-for-Tile-Paving.jpg',
-    imageSource: 'Representative public listing image',
-    specs: ['Цена: $98,000–$165,000', 'MOQ: 1 машина', 'Лепило + полагане', 'Плочки: 600×600 / 800×800 / 600×1200 mm', 'Laser SLAM навигация']
+    imageUrl: 'https://s.alicdn.com/%40sc04/kf/He8009f59e9be4ed59b01f13919da04ab3/Automatic-Tile-Laying-Robot-High-Efficiency-Tile-Laying-Robot-Self-adaptive-Adjustment-for-Commercial-Buildings.jpg',
+    imageSource: 'Public automatic tile-laying robot product image; verify exact configuration with vendor',
+    specs: ['Цена: $98,000–$165,000', 'MOQ: 1 машина', 'Лепило + полагане', '600×600 / 800×800 / 600×1200 mm', 'Laser SLAM']
   },
   {
     id: 'partner-robotics-p900',
@@ -86,7 +86,7 @@ export const ROBOT_PRODUCTS = [
     name: 'Partner Robotics P900 — Floor Tile Paving Robot',
     model: 'P900',
     eyebrow: 'PARTNER ROBOTICS · PROFESSIONAL',
-    blurb: 'Професионален floor tile paving robot за реални строителни обекти с автономно движение, прецизно позициониране и таблетно управление.',
+    blurb: 'Професионален робот за полагане на подови плочки с автономно движение, таблетно управление и работа на реални обекти.',
     priceKnown: false,
     price: null,
     priceCurrency: 'USD',
@@ -94,9 +94,9 @@ export const ROBOT_PRODUCTS = [
     priceNote: 'Цена по оферта от производителя. Публична фиксирана цена не е обявена.',
     priceSource: 'Partner Robotics',
     referenceUrl: 'https://www.partnerrobotics.com/pages/floor-tile-paving-robot',
-    imageUrl: 'https://sourcing-media.hktdc.com/original-file/914112943bb541e3ab2ac4cbbbe1c9ea?bucket=PUBLIC_ACCESS_MEDIA_BUCKET_550',
-    imageSource: 'HKTDC public product image',
-    specs: ['Размери: 1300×800×1950 mm', 'Тегло: 640 kg', 'Payload: 30 kg', 'Автономност: над 6 часа', 'Производителност: до 18 m²/h', 'AC220V', 'Плочки: 300×300 до 600×1200 mm', 'CE: заявено от производителя']
+    imageUrl: 'https://console.kr-asia.com/wp-content/uploads/2025/11/Partner-Robotics-P900.jpg',
+    imageSource: 'Partner Robotics P900 photo',
+    specs: ['Размери: 1300×800×1950 mm', 'Тегло: 640 kg', 'Payload: 30 kg', 'Автономност: над 6 часа', 'До 18 m²/h', 'AC220V']
   },
   {
     id: 'legend-floor-tile-laying-robot',
@@ -104,7 +104,7 @@ export const ROBOT_PRODUCTS = [
     name: 'Legend Robotics Floor Tile Laying Robot',
     model: 'Lingque / Legend Tile Robot',
     eyebrow: 'LEGEND ROBOTICS · HUMAN–ROBOT COLLABORATION',
-    blurb: 'Компактен робот за автоматично полагане на подови плочки с човек–робот кооперативен режим за жилища, хотели и офиси.',
+    blurb: 'Робот за автоматично полагане на подови плочки с човек–робот кооперативен режим за жилища, хотели и офиси.',
     priceKnown: false,
     price: null,
     priceCurrency: 'USD',
@@ -114,6 +114,6 @@ export const ROBOT_PRODUCTS = [
     referenceUrl: 'https://www.legendrobot.cn/products/tile-laying-robot/',
     imageUrl: 'https://www.legendrobot.cn/upload/2024/03/19/xfsy8t77yfc611710840303.jpg',
     imageSource: 'Legend Robotics official product image',
-    specs: ['Размери: 960×780×1750 mm', 'Тегло: 600 kg', 'Автономност: 4 часа', 'Плочки: 600×600 / 800×800 mm', 'Резервоар: 60 L разтвор', 'Макс. тегло на плочка: 20 kg', '80–120 плочки/ден', 'Екип: 1 робот + 2 работници']
+    specs: ['Размери: 960×780×1750 mm', 'Тегло: 600 kg', 'Автономност: 4 часа', '600×600 / 800×800 mm', 'Резервоар: 60 L', '80–120 плочки/ден']
   }
 ];
