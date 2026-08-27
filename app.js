@@ -28,7 +28,7 @@ function detailedDescription(product){ return product.longDescription || product
 function formatPrice(product){
   if (!product.priceKnown || !Number.isFinite(product.price)) {
     if (Number.isFinite(product.priceMin) && Number.isFinite(product.priceMax)) return `$${Number(product.priceMin).toLocaleString('en-US')}–$${Number(product.priceMax).toLocaleString('en-US')}`;
-    return 'По оферта';
+    return 'Цена при запитване';
   }
   const symbol = product.priceCurrency === 'USD' ? '$' : '€';
   return `${symbol}${Number(product.price).toLocaleString('bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -102,7 +102,7 @@ function renderCart(){
   }
   const subtotal=cartSubtotal(productById); cartSubtotalEl.textContent=`€${subtotal.toLocaleString('bg-BG',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
   const hasQuotes=cartHasNonPurchasableItems(productById); checkoutButton.disabled=!items.length||hasQuotes||subtotal<=0;
-  cartNote.textContent=hasQuotes?'Кошницата съдържа продукт по оферта или в USD. За него първо е нужна потвърдена търговска оферта.':'Всички платими продукти са в EUR и са подготвени за PayPal checkout.';
+  cartNote.textContent=hasQuotes?'Кошницата съдържа продукт с цена при запитване или в USD. За него първо е нужна потвърдена търговска оферта.':'Всички платими продукти са в EUR и са подготвени за PayPal checkout.';
 }
 function updateCartUI(){ renderCart(); initCartPayment(productById); }
 function setupMenu(){ const menu=qs('.menu');const nav=qs('#main-nav');menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});nav?.querySelectorAll('a').forEach((a)=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');})); }
