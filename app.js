@@ -1,13 +1,14 @@
 import { STORE, getCategory, getProduct } from './products.js';
 import { ROBOT_CATEGORY, ROBOT_PRODUCTS } from './robot-products.js';
 import { PRODUCT_COPY } from './product-copy.js';
+import { ROBOT_COPY } from './robot-copy.js';
 import { PRODUCT_IMAGE_OVERRIDES } from './image-overrides.js';
 import { MERCHANT } from './merchant-config.js';
-import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount, cartSubtotal, cartHasNonPurchasableItems, cartMailtoSubject, cartMailtoBody } from './cart.js';
+import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount, cartSubtotal, cartHasNonPurchasableItems, cartMailtoBody } from './cart.js';
 import { initCartPayment } from './payment.js';
 
 const CATEGORIES = [...STORE.categories.filter((item) => item.id !== 'robots'), ROBOT_CATEGORY];
-const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}) }));
+const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}) }));
 const qs = (selector) => document.querySelector(selector);
 const productGrid = qs('#product-grid');
 const categoryGrid = qs('#category-grid');
@@ -34,24 +35,20 @@ function formatPrice(product){
 }
 function imageSrc(product){
   const original = imageUrlFor(product);
-  if (!original) return '';
-  return `https://images.weserv.nl/?url=${encodeURIComponent(original)}`;
+  return original ? `https://images.weserv.nl/?url=${encodeURIComponent(original)}` : '';
 }
 function escapeHtml(value){ return String(value).replace(/[&<>'\"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '\"':'&quot;' }[c])); }
 
 function injectMerchantContact(){
   const contact = document.querySelector('.contact-details');
-  if (!contact) return;
-  const existing = contact.querySelector('[data-merchant-phone]');
-  if (!existing && MERCHANT.phone) {
-    const p = document.createElement('p');
-    p.dataset.merchantPhone = 'true';
-    const a = document.createElement('a');
-    a.href = `tel:${MERCHANT.phone.replace(/\s+/g, '')}`;
-    a.textContent = MERCHANT.phone;
-    p.appendChild(a);
-    contact.appendChild(p);
-  }
+  if (!contact || contact.querySelector('[data-merchant-phone]')) return;
+  const p = document.createElement('p');
+  p.dataset.merchantPhone = 'true';
+  const a = document.createElement('a');
+  a.href = `tel:${MERCHANT.phone.replace(/\s+/g, '')}`;
+  a.textContent = MERCHANT.phone;
+  p.appendChild(a);
+  contact.appendChild(p);
 }
 function openCart(){ cartDrawer?.classList.add('open'); cartDrawer?.setAttribute('aria-hidden','false'); if (cartOverlay) cartOverlay.hidden=false; document.body.classList.add('cart-open'); renderCart(); }
 function closeCart(){ cartDrawer?.classList.remove('open'); cartDrawer?.setAttribute('aria-hidden','true'); if (cartOverlay) cartOverlay.hidden=true; document.body.classList.remove('cart-open'); }
@@ -82,7 +79,7 @@ function renderProducts(){
         <div class="product-footer"><div class="price-block"><span class="price-label">Цена</span><strong class="price-inquiry">${escapeHtml(formatPrice(product))}</strong></div><button class="btn btn-dark buy-product" type="button" data-product="${escapeHtml(product.id)}" aria-label="Купи ${escapeHtml(product.name)}">КУПИ${inCart ? ` · ${inCart}` : ''}</button></div>
         ${product.priceNote ? `<div class="price-note">${escapeHtml(product.priceNote)}</div>` : ''}
         ${product.priceSource ? `<div class="price-source">Източник: ${escapeHtml(product.priceSource)}</div>` : ''}
-        ${product.referenceUrl ? `<a class="product-link" href="${escapeHtml(product.referenceUrl)}" target="_blank" rel="noopener noreferrer">Източна обява →</a>` : ''}
+        ${product.referenceUrl ? `<a class="product-link" href="${escapeHtml(product.referenceUrl)}" target="_blank" rel="noopener noreferrer">Изходна обява →</a>` : ''}
         ${product.officialUrl ? `<a class="product-link" href="${escapeHtml(product.officialUrl)}" target="_blank" rel="noopener noreferrer">Официални данни →</a>` : ''}
       </div></article>`;
   }).join('') : '<p>Няма намерени продукти.</p>';
@@ -91,7 +88,7 @@ function renderProducts(){
     if (original && img.src !== original) { img.src = original; return; }
     const holder = img.closest('.product-art'); if (holder) holder.innerHTML = '<div class="shape"><span>WAGNER</span></div>';
   }, { once:true }));
-  productGrid.querySelectorAll('.buy-product').forEach((button) => button.addEventListener('click', () => { addToCart(button.dataset.product); updateCartUI(); openCart(); renderProducts(); }));
+  productGrid.querySelectorAll('.buy-product').forEach((button) => button.addEventListener('click', () => { addToCart(button.dataset.product); updateCartUI(); openCart(); }));
 }
 function renderCart(){
   const items = loadCart().map((entry) => ({ entry, product: productById(entry.id) })).filter(({ product }) => product);
