@@ -7,131 +7,25 @@ export const STORE = {
     phone: '+359 88 579 66 13'
   },
   categories: [
-    { id: 'airless', name: 'Airless боядисване', desc: 'Високоефективно нанасяне на бои, фасадни покрития и други материали.' },
-    { id: 'xvlp', name: 'XVLP / HVLP', desc: 'Компактни системи за FineFinish, лакове, емайли и ремонтни задачи.' },
-    { id: 'filler', name: 'Шпакловка и замазка', desc: 'Производителни решения за спрей шпакловка и тежки довършителни материали.' },
-    { id: 'guns', name: 'Пистолети и дюзи', desc: 'Професионални пистолети, HEA и FineFinish дюзи и съвместими компоненти.' },
-    { id: 'accessories', name: 'Аксесоари', desc: 'Маркучи, филтри, удължители, ролери и други компоненти за системите.' },
-    { id: 'preparation', name: 'Подготовка', desc: 'Инструменти и решения за подготовка на повърхности преди нанасяне.' }
+    { id: 'airless', name: 'Airless боядисване', desc: 'Професионални системи за дисперсии, латекс, фасадни бои, грундове и други покрития.' },
+    { id: 'xvlp', name: 'XVLP / HVLP', desc: 'Системи за лакове, емайли, дърво, метал и фини довършителни приложения.' },
+    { id: 'filler', name: 'Шпакловка и замазка', desc: 'Високопроизводителни решения за спрей шпакловка и тежки строителни материали.' },
+    { id: 'guns', name: 'Пистолети и дюзи', desc: 'Професионални airless пистолети, HEA дюзи и компоненти за различни системи.' },
+    { id: 'accessories', name: 'Аксесоари', desc: 'Маркучи, филтри, дюзи, удължители и сервизни компоненти.' },
+    { id: 'preparation', name: 'Подготовка', desc: 'Решения за подготовка и ремонт преди нанасяне на покрития.' }
   ],
   products: [
-    {
-      id: 'superfinish-21-pro-hea',
-      category: 'airless',
-      name: 'SuperFinish 21 Pro HEA',
-      eyebrow: 'WAGNER PROFESSIONAL · AIRLESS HEA',
-      blurb: 'Компактна професионална диафрагмена помпа за дисперсии и латексови бои при средни по размер обекти.',
-      priceKnown: true,
-      price: 1477.63,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['Макс. дебит: 2,1 l/min', 'Макс. дюза: 0,021″', 'Работно налягане: 207 bar', 'Мотор: 0,9 kW'],
-      sourceUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/building-trade/'
-    },
-    {
-      id: 'control-pro-350m',
-      category: 'airless',
-      name: 'Control Pro 350M',
-      eyebrow: 'WAGNER · HEA AIRLESS',
-      blurb: 'Бутална HEA система за боядисване с ниско налягане и контролирано разпрашаване.',
-      priceKnown: true,
-      price: 787.39,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['Мощност: 600 W', 'Дебит: 1,5 l/min', 'HEA технология', '15 m маркуч'],
-      sourceUrl: 'https://etools.bg/product/5232/mashina-za-praskane-na-lateks-wagner-control-pro-350m-600-w-1-5-l-min.html'
-    },
-    {
-      id: 'prospray-320-hea',
-      category: 'airless',
-      name: 'ProSpray 3.20 HEA',
-      eyebrow: 'WAGNER PROFESSIONAL · AIRLESS',
-      blurb: 'Професионална безвъздушна система за пръскане на бои с HEA технология.',
-      priceKnown: true,
-      price: 1687.26,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['Макс. налягане: 207 bar', 'Дебит: 1,6 l/min', '15 m маркуч', '230 V'],
-      sourceUrl: 'https://etools.bg/product/39804/wagner-prospray-3-20-hea-profesionalna-bezvazdushna-mashina-za-praskane-na-boi-1000-w-2-l-min.html'
-    },
-    {
-      id: 'control-pro-300-move',
-      category: 'airless',
-      name: 'Control Pro 300 Move',
-      eyebrow: 'WAGNER · AIRLESS · 18 V',
-      blurb: 'Мобилна акумулаторна безвъздушна система за боядисване, подходяща за ремонтни и средни задачи.',
-      priceKnown: true,
-      price: 843.12,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['18 V', 'Дебит: 0,9 l/min', 'Налягане: 110 bar', 'Резервоар: 4,7 l'],
-      sourceUrl: 'https://www.etools.bg/category/3285/mashini-za-boyadisvane-wagner.html'
-    },
-    {
-      id: 'finishcontrol-3500',
-      category: 'xvlp',
-      name: 'FinishControl 3500',
-      eyebrow: 'WAGNER · XVLP',
-      blurb: 'Компактна XVLP система за лакове, FineFinish, ремонтни задачи и малки проекти.',
-      priceKnown: true,
-      price: 506.18,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['700 W', '2,3 kg', '0,2 bar', 'До 50 m²'],
-      sourceUrl: 'https://www.wagner-group.com/uk/contractor/products-and-accessories/product/finishcontrol-3500/'
-    },
-    {
-      id: 'w180p',
-      category: 'xvlp',
-      name: 'WAGNER W180P',
-      eyebrow: 'WAGNER · SPRAY SYSTEM',
-      blurb: 'Компактно решение с аксесоари за боядисване при по-малки задачи и ремонтни работи.',
-      priceKnown: true,
-      price: 86.41,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['Мощност: 110 W', 'Контейнер: 800 ml', 'Комплект с аксесоари'],
-      sourceUrl: 'https://www.etools.bg/brand/203/wagner.html'
-    },
-    {
-      id: 'prospray-339-connect-filler',
-      category: 'filler',
-      name: 'ProSpray 3.39 Connect Filler',
-      eyebrow: 'WAGNER PROFESSIONAL · CONNECT',
-      blurb: 'Високопроизводителна piston-pump система за спрей шпакловка и големи строителни обекти.',
-      priceKnown: false,
-      price: null,
-      priceNote: 'Цена при запитване.',
-      priceSource: null,
-      specs: ['Макс. дебит: 5,0 l/min', 'Макс. дюза: 0,039″', 'Мотор: 2,185 kW', 'Тегло: 50 kg'],
-      sourceUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/prospray-339-connect-filler/'
-    },
-    {
-      id: 'superfinish-23-plus-hea',
-      category: 'airless',
-      name: 'SuperFinish 23 Plus HEA',
-      eyebrow: 'WAGNER PROFESSIONAL · AIRLESS HEA',
-      blurb: 'Компактна и здрава система за емулсионни и фасадни бои при средни строителни и ремонтни проекти.',
-      priceKnown: false,
-      price: null,
-      priceNote: 'Цена при запитване.',
-      priceSource: null,
-      specs: ['Макс. дебит: 2,6 l/min', 'Макс. дюза: 0,023″', 'Макс. налягане: 250 bar', 'Мотор: 1,3 kW'],
-      sourceUrl: 'https://www.wagner-group.com/uk/contractor/products-and-accessories/product/superfinish-23-plus-hea-spraypack/'
-    },
-    {
-      id: 'wagner-vector-pro',
-      category: 'guns',
-      name: 'WAGNER професионален airless пистолет',
-      eyebrow: 'WAGNER · AIRLESS GUN',
-      blurb: 'Професионален пистолет за airless системи; точната конфигурация се определя според дюзата и приложението.',
-      priceKnown: true,
-      price: 101.75,
-      priceNote: 'Пазарен ориентир; потвърди крайната цена с КОЛМАН ЕООД.',
-      priceSource: 'Etools.bg',
-      specs: ['Модел: Control 150M 2399788', 'Професионално изпълнение', 'Съвместимост според системата'],
-      sourceUrl: 'https://www.etools.bg/category/3284/boyadzhiyski-pistoletti-wagner.html'
-    }
+    { id: 'prospray-320-hea', category: 'airless', name: 'ProSpray 3.20 HEA', model: 'PS 3.20 HEA', eyebrow: 'WAGNER PROFESSIONAL · AIRLESS HEA', blurb: 'Компактна професионална airless система за средни обекти и интериорни емулсионни бои.', priceKnown: true, price: 1687.26, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; крайната цена и наличност се потвърждават от КОЛМАН ЕООД.', priceSource: 'Etools.bg', referenceUrl: 'https://etools.bg/category/3285/mashini-za-boyadisvane-wagner.html', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/prospray-320-hea-spraypack/', specs: ['Макс. налягане: 207 bar', 'Дебит: 2,0 l/min', 'Макс. дюза: 0,021″', 'Мотор: 1,0 kW'] },
+    { id: 'control-pro-300-move', category: 'airless', name: 'Control Pro 300 Move', model: 'Control Pro 300 Move', eyebrow: 'WAGNER · AIRLESS · 18 V', blurb: 'Мобилна акумулаторна airless система за ремонтни и средни задачи с контролирано разпрашаване.', priceKnown: true, price: 843.12, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; потвърди крайната цена и конфигурацията преди покупка.', priceSource: 'Etools.bg', referenceUrl: 'https://etools.bg/category/3285/mashini-za-boyadisvane-wagner.html', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/control-pro-300-move/', specs: ['Захранване: 18 V', 'Дебит: 0,9 l/min', 'Налягане: 110 bar', 'Резервоар: 4,7 l'] },
+    { id: 'superfinish-21-pro-hea', category: 'airless', name: 'SuperFinish 21 Pro HEA', model: 'SF 21 PRO HEA', eyebrow: 'WAGNER PROFESSIONAL · AIRLESS HEA', blurb: 'Компактна професионална диафрагмена помпа за емулсии, латекс и други покрития при средни проекти.', priceKnown: true, price: 1477.63, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; цената на КОЛМАН ЕООД се потвърждава отделно.', priceSource: 'Etools.bg', referenceUrl: 'https://etools.bg/product/57574/elektricheska-profesionalna-bezvazdushna-mashina-za-praskane-na-boi-wagner-superfinish-21-pro-hea-900-w.html', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/superfinish-21-pro-hea/', specs: ['Мотор: 0,9 kW', 'Дебит: 2,1 l/min', 'Налягане: 207 bar', 'Маркуч: 15 m'] },
+    { id: 'superfinish-23-pro-cart-hea', category: 'airless', name: 'SuperFinish 23 Pro Cart HEA', model: 'SuperFinish 23 Pro', eyebrow: 'WAGNER PROFESSIONAL · CART HEA', blurb: 'Здрава професионална диафрагмена машина за лакове, грундове, дисперсии, латекс и фасадни покрития.', priceKnown: true, price: 2249.17, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; крайната цена, комплектът и наличността се потвърждават от КОЛМАН ЕООД.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/bezvazdushno-boyadzhiyska-mashina-wagner-superfinish-23-pro-cart-hea-22-kw', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/superfinish-23-pro-spraypack/', specs: ['Мотор: 2,2 kW', 'Дебит: 2,6 l/min', 'Налягане: 250 bar', 'Тегло: 29 kg'] },
+    { id: 'prospray-325-cart', category: 'airless', name: 'ProSpray 3.25 Spraypack Cart', model: 'ProSpray 3.25', eyebrow: 'WAGNER PROFESSIONAL · AIRLESS', blurb: 'Мобилна професионална система за емулсии, грундове, масла и фасадни бои при малки и средни обекти.', priceKnown: true, price: 3220.63, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; крайната цена и комплектът се потвърждават преди поръчка.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/bezvazdushno-boyadzhiyska-mashina-wagner-prospray-325-spraypack-cart-13kw', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/ps-325-airless-spraypack/', specs: ['Мотор: 1,3 kW', 'Дебит: 2,6 l/min', 'Налягане: 221 bar', 'Маркуч: 15 m'] },
+    { id: 'superfinish-33-pro', category: 'airless', name: 'SuperFinish 33 Pro', model: 'SF 33 PRO', eyebrow: 'WAGNER PROFESSIONAL · HIGH OUTPUT', blurb: 'Високопроизводителна диафрагмена система за вътрешни и външни проекти, включително широк спектър покрития.', priceKnown: true, price: 4856.76, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; наличност и финална оферта се потвърждават от КОЛМАН ЕООД.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/bezvazdushno-boyadzhiyska-mashina-wagner-superfinish-33-pro-22-kw', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/superfinish-33/', specs: ['Мотор: 2,2 kW', 'Дебит: 4,3 l/min', 'Налягане: 250 bar', 'Макс. дюза: 0,033″'] },
+    { id: 'pp90-extra-hea', category: 'airless', name: 'PowerPainter PP 90 Extra HEA', model: 'PP 90 Extra HEA', eyebrow: 'WAGNER · AIRLESS HEA', blurb: 'Компактна airless система за по-големи DIY проекти и малки до средни строителни и ремонтни задачи.', priceKnown: true, price: 1017.47, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; потвърди крайната цена и наличността.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/bezvazdushno-boyadzhiyska-mashina-wagner-powerpainter-pp-90-extra-hea-08-kw', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/powerpainter-90-extra/', specs: ['Мотор: 0,8 kW', 'Дебит: 1,3 l/min', 'Налягане: 207 bar', 'Макс. дюза: 0,019″'] },
+    { id: 'finishcontrol-4000-18v', category: 'xvlp', name: 'FinishControl 4000 18V', model: 'FinishControl 4000 18V', eyebrow: 'WAGNER · XVLP · CORDLESS', blurb: 'Акумулаторна XVLP система за по-малки обекти, ремонт и фино боядисване на дърво и метал.', priceKnown: true, price: 802.21, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; конфигурацията на батерия и зарядно трябва да се потвърди.', priceSource: 'Etools.bg', referenceUrl: 'https://etools.bg/product/57630/akumulatoren-pistolet-za-boyadisvane-na-lateks-i-blazhni-boi-wagner-finish-control-4000-xvlp-18-v.html', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/finishcontrol-4000-18v-finespray/', specs: ['Захранване: 18 V', 'Технология: XVLP/HVLP', 'Налягане: 0,2 bar', 'Контейнер: 1.000 ml'] },
+    { id: 'finishcontrol-5500', category: 'xvlp', name: 'FinishControl 5500', model: 'FinishControl 5500', eyebrow: 'WAGNER · XVLP · 230 V', blurb: 'Професионална XVLP система за боядисване, ретуш и обновяване с бърза смяна на приставките.', priceKnown: true, price: 741.37, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; потвърди крайната цена и комплектацията.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/pistolet-za-boyadivane-wagner-finish-control-5500-230v', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/product/finishcontrol-5500/', specs: ['Мощност: 1,15 kW', 'Налягане: 0,29 bar', 'Маркуч: 5 m', 'Тегло: 6,6 kg'] },
+    { id: 'ac4500-greenair', category: 'guns', name: 'AC4500 GreenAir Professional', model: 'AC4500 GreenAir', eyebrow: 'WAGNER · AIRLESS GUN', blurb: 'Професионален airless пистолет за съвместими WAGNER системи и прецизно нанасяне.', priceKnown: true, price: 403.41, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; съвместимостта и точната конфигурация се потвърждават преди покупка.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/wagner-pistoleti-za-boyadisvane', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/building-trade/', specs: ['Професионално изпълнение', 'Airless приложение', 'Съвместимост според системата'] },
+    { id: 'vectorpro-4-finger', category: 'guns', name: 'VectorPro 4 Finger Professional', model: 'VectorPro 4 Finger', eyebrow: 'WAGNER · AIRLESS GUN', blurb: 'Ергономичен професионален airless пистолет за бои, емулсии и латекс при до 250 bar.', priceKnown: true, price: 234.68, priceCurrency: 'EUR', priceType: 'market-reference', priceNote: 'Референтна публична онлайн цена; потвърди съвместимостта с конкретната машина.', priceSource: 'Mashini.bg', referenceUrl: 'https://www.mashini.bg/boyadzhiyski-bezvazdushen-pistolet-wagner-vectorpro-4-finger-professional-250-bara', officialUrl: 'https://www.wagner-group.com/en/contractor/products-and-accessories/building-trade/', specs: ['Макс. налягане: 250 bar', 'Тегло: 0,599 kg', 'За бои, емулсии и латекс'] }
   ]
 };
 
