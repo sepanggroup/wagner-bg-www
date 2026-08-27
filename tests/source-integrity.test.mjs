@@ -28,7 +28,7 @@ assert.doesNotMatch(app, /kolmaneood@[a-z0-9.-]+/i, 'Business email belongs in p
 
 for (const [file, required] of [
   ['products.js', ['SuperFinish 21 Pro HEA', 'SuperFinish 23 Pro Cart HEA', 'ProSpray 3.25 Spraypack Cart', 'SuperFinish 33 Pro', 'FinishControl 4000 18V', 'VectorPro 4 Finger Professional']],
-  ['app.js', ['specs', 'priceBlock']]
+  ['app.js', ['specs', 'price-block']]
 ]) {
   const text = read(file);
   for (const token of required) assert.match(text, new RegExp(token.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')));
