@@ -3,12 +3,13 @@ import { ROBOT_CATEGORY, ROBOT_PRODUCTS } from './robot-products.js';
 import { PRODUCT_COPY } from './product-copy.js';
 import { ROBOT_COPY } from './robot-copy.js';
 import { PRODUCT_IMAGE_OVERRIDES } from './image-overrides.js';
+import { EXTRA_PRODUCTS } from './extra-products.js';
 import { MERCHANT } from './merchant-config.js';
 import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount, cartSubtotal, cartHasNonPurchasableItems, cartMailtoBody } from './cart.js';
 import { initCartPayment } from './payment.js';
 
 const CATEGORIES = [...STORE.categories.filter((item) => item.id !== 'robots'), ROBOT_CATEGORY];
-const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}) }));
+const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS, ...EXTRA_PRODUCTS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}) }));
 const qs = (selector) => document.querySelector(selector);
 const productGrid = qs('#product-grid');
 const categoryGrid = qs('#category-grid');
@@ -38,6 +39,12 @@ function imageSrc(product){
   return original ? `https://images.weserv.nl/?url=${encodeURIComponent(original)}` : '';
 }
 function escapeHtml(value){ return String(value).replace(/[&<>'\"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '\"':'&quot;' }[c])); }
+function youtubeEmbedUrl(url){
+  if (!url) return '';
+  const match = String(url).match(/[?&]v=([^&]+)/);
+  if (match) return `https://www.youtube.com/embed/${match[1]}`;
+  return '';
+}
 
 function injectMerchantContact(){
   const contact = document.querySelector('.contact-details');
@@ -68,6 +75,7 @@ function renderProducts(){
   productGrid.innerHTML = filtered.length ? filtered.map((product) => {
     const inCart = cart.find((item) => item.id === product.id)?.quantity || 0;
     const src = imageSrc(product);
+    const videoEmbed = youtubeEmbedUrl(product.videoUrl);
     return `<article class="product-card">
       <div class="product-art" aria-label="${escapeHtml(product.name)}">${src ? `<img src="${escapeHtml(src)}" data-original-image="${escapeHtml(imageUrlFor(product))}" alt="${escapeHtml(product.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="shape"><span>${escapeHtml((product.model || 'WAGNER').slice(0,18))}</span></div>`}</div>
       <div class="product-body">
@@ -76,6 +84,7 @@ function renderProducts(){
         <p>${escapeHtml(product.blurb || '')}</p>
         <details class="product-details"><summary>Пълно описание</summary><div class="product-description">${escapeHtml(detailedDescription(product))}</div></details>
         ${product.specs?.length ? `<div class="specs">${product.specs.map((spec) => `<span>${escapeHtml(spec)}</span>`).join('')}</div>` : ''}
+        ${videoEmbed ? `<div class="product-video"><iframe src="${escapeHtml(videoEmbed)}" title="Видео за ${escapeHtml(product.name)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>` : product.videoUrl ? `<a class="product-link" href="${escapeHtml(product.videoUrl)}" target="_blank" rel="noopener noreferrer">Видео на продукта →</a>` : ''}
         <div class="product-footer"><div class="price-block"><span class="price-label">Цена</span><strong class="price-inquiry">${escapeHtml(formatPrice(product))}</strong></div><button class="btn btn-dark buy-product" type="button" data-product="${escapeHtml(product.id)}" aria-label="Купи ${escapeHtml(product.name)}">КУПИ${inCart ? ` · ${inCart}` : ''}</button></div>
         ${product.priceNote ? `<div class="price-note">${escapeHtml(product.priceNote)}</div>` : ''}
         ${product.priceSource ? `<div class="price-source">Източник: ${escapeHtml(product.priceSource)}</div>` : ''}
