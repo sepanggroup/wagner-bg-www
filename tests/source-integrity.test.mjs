@@ -20,6 +20,7 @@ assert.match(index, /application\/ld\+json/);
 assert.match(products, /WAGNER/);
 assert.match(products, /priceType: 'market-reference'/);
 assert.match(products, /priceKnown: true/);
+assert.ok((products.match(/imageUrl:/g) || []).length >= 11, 'Every core catalog product must have product photography');
 assert.match(robots, /ROBOT_CATEGORY/);
 assert.match(robots, /ROBOT_PRODUCTS/);
 assert.match(robots, /Kaifeng Yucheng/);
@@ -27,7 +28,7 @@ assert.match(robots, /95000/);
 assert.match(robots, /165000/);
 assert.match(robots, /Partner Robotics P900/);
 assert.match(robots, /Legend Robotics/);
-assert.match(robots, /imageUrl/);
+assert.ok((robots.match(/imageUrl:/g) || []).length >= 4, 'Robot catalog must contain product photography');
 assert.match(payment, /PayPal/);
 assert.match(payment, /payment-config\.js/);
 assert.doesNotMatch(products, /sepang-tech-group/);
@@ -41,7 +42,7 @@ assert.match(app, /imageUrl/);
 
 for (const [file, required] of [
   ['products.js', ['SuperFinish 21 Pro HEA', 'SuperFinish 23 Pro Cart HEA', 'ProSpray 3.25 Spraypack Cart', 'SuperFinish 33 Pro', 'FinishControl 4000 18V', 'VectorPro 4 Finger Professional']],
-  ['app.js', ['specs', 'price-block']]
+  ['app.js', ['specs', 'formatPrice', 'imageUrl']]
 ]) {
   const text = read(file);
   for (const token of required) assert.match(text, new RegExp(token.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')));
@@ -53,4 +54,4 @@ for (const file of ['privacy.html', 'terms.html', 'cookies.html', 'thanks.html']
   assert.match(html, /index\.html/);
 }
 
-console.log('WAGNER source integrity contract passed');
+console.log('WAGNER product catalog, photography and source integrity contract passed');
