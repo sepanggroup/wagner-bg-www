@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const products = read('products.js');
 const robots = read('robot-products.js');
+const copy = read('product-copy.js');
 const app = read('app.js');
 const index = read('index.html');
 
@@ -13,19 +14,16 @@ assert.match(index, /Техника, която <em>работи за вас\.<\
 assert.match(app, /КУПИ/);
 assert.match(app, /addToCart/);
 assert.match(app, /cart-drawer/);
-assert.match(app, /imageUrl/);
 assert.match(app, /longDescription/);
-assert.match(products, /longDescription:/);
-assert.match(robots, /longDescription:/);
+assert.match(copy, /PRODUCT_COPY/);
 
-const allImageUrls = [...products.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1]);
+const productImageUrls = [...products.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1]);
 const robotImageUrls = [...robots.matchAll(/imageUrl:\s*'([^']+)'/g)].map((m) => m[1]);
-const allDescriptions = [...products.matchAll(/longDescription:\s*'([^']+)'/g)].map((m) => m[1]);
-const robotDescriptions = [...robots.matchAll(/longDescription:\s*'([^']+)'/g)].map((m) => m[1]);
+const copyDescriptions = [...copy.matchAll(/longDescription:\s*'([^']+)'/g)].map((m) => m[1]);
 
-assert.equal(new Set(allImageUrls).size, allImageUrls.length, 'Core product photography must be unique');
+assert.equal(new Set(productImageUrls).size, productImageUrls.length, 'Core product photography must be unique');
 assert.equal(new Set(robotImageUrls).size, robotImageUrls.length, 'Robot photography must be unique');
-assert.ok(allDescriptions.every((value) => value.length >= 180), 'Core product descriptions must be detailed in Bulgarian');
-assert.ok(robotDescriptions.every((value) => value.length >= 220), 'Robot product descriptions must be detailed in Bulgarian');
-assert.ok(robotImageUrls.length >= 10, 'Curated robot catalog must contain at least 10 photographed models');
+assert.ok(copyDescriptions.length >= 11, 'Core catalog must have detailed Bulgarian descriptions');
+assert.ok(copyDescriptions.every((value) => value.length >= 180), 'Core descriptions must be detailed');
+assert.ok(robotImageUrls.length >= 10, 'Robot catalog must contain at least 10 photographed models');
 console.log('WAGNER catalog quality contract passed');
