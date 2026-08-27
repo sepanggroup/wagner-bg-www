@@ -9,7 +9,12 @@ import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount,
 import { initCartPayment } from './payment.js';
 
 const CATEGORIES = [...STORE.categories.filter((item) => item.id !== 'robots'), ROBOT_CATEGORY];
-const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS, ...EXTRA_PRODUCTS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}) }));
+const EXTRA_BY_ID = new Map(EXTRA_PRODUCTS.map((product) => [product.id, product]));
+const BASE_PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}) }));
+const PRODUCTS = [
+  ...BASE_PRODUCTS.map((product) => EXTRA_BY_ID.has(product.id) ? { ...product, ...EXTRA_BY_ID.get(product.id) } : product),
+  ...EXTRA_PRODUCTS.filter((product) => !BASE_PRODUCTS.some((base) => base.id === product.id))
+];
 const qs = (selector) => document.querySelector(selector);
 const productGrid = qs('#product-grid');
 const categoryGrid = qs('#category-grid');
@@ -114,7 +119,7 @@ function renderCart(){
   cartNote.textContent=hasQuotes?'Кошницата съдържа продукт с цена при запитване или в USD. За него първо е нужна потвърдена търговска оферта.':'Всички платими продукти са в EUR и са подготвени за PayPal checkout.';
 }
 function updateCartUI(){ renderCart(); initCartPayment(productById); }
-function setupMenu(){ const menu=qs('.menu');const nav=qs('#main-nav');menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});nav?.querySelectorAll('a').forEach((a)=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');})); }
+function setupMenu(){ const menu=qs('.menu');const nav=qs('#main-nav');menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});nav?.querySelectorAll('a').forEach((a)=>a.addEventListener('click',()=>{nav.classList.remove('open');nav.setAttribute('aria-expanded','false');})); }
 function setupContact(){ qs('#contact-form')?.addEventListener('submit',(event)=>{event.preventDefault();const data=new FormData(event.currentTarget);const subject=encodeURIComponent(`Поръчка WAGNER-BG — ${data.get('name')||''}`);const body=encodeURIComponent(`${data.get('message')||''}\n\nКошница:\n${decodeURIComponent(cartMailtoBody(productById))}`);window.location.href=`mailto:${MERCHANT.email}?subject=${subject}&body=${body}`;}); }
 
 qs('#open-cart')?.addEventListener('click',openCart); qs('#hero-cart')?.addEventListener('click',openCart); qs('#close-cart')?.addEventListener('click',closeCart); cartOverlay?.addEventListener('click',closeCart);
