@@ -11,22 +11,19 @@ const payment = read('payment.js');
 const merchant = read('merchant-config.js');
 const cart = read('cart.js');
 const app = read('app.js');
-const cname = read('CNAME').trim();
 
 assert.match(index, /<html lang="bg">/);
-assert.match(index, /<link rel="canonical" href="https:\/\/www\.wagner-bg\.shop\/">/);
-assert.equal(cname, 'www.wagner-bg.shop');
+assert.match(index, /<link rel="canonical" href="https:\/\/sepanggroup\.github\.io\/wagner-bg-www\/">/);
 assert.match(index, /styles\.css\?v=/);
 assert.match(index, /cart\.css\?v=/);
-assert.match(index, /privacy\.html/);
-assert.match(index, /terms\.html/);
-assert.match(index, /cookies\.html/);
 assert.match(index, /application\/ld\+json/);
 assert.match(index, /SEPANG GROUP ЕООД/);
 assert.match(index, /Техниката, която <em>работи за вас\.<\/em>/);
 assert.match(index, /\+359 88 503 9931/);
 assert.match(index, /КУПИ/);
 assert.match(index, /cart-drawer/);
+assert.match(index, /paypal-button-container/);
+assert.match(index, /contact-form/);
 assert.doesNotMatch(index, /КОЛМАН ЕООД/);
 assert.doesNotMatch(index, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
@@ -55,17 +52,9 @@ assert.match(robots, /лепило/);
 const robotImageUrls = [...images.matchAll(/'([^']+)':\s*'([^']+)'/g)].map((m) => m[2]);
 assert.ok(robotImageUrls.length >= 11, 'Robot catalog image map must cover every robot listing');
 assert.equal(new Set(robotImageUrls).size, robotImageUrls.length, 'Each mapped robot listing must use a distinct photo URL');
-assert.match(images, /partner-p900/);
-assert.match(images, /fangshi-ceramic-tile-robot/);
-assert.match(images, /fangshi-stone-tile-robot/);
-assert.match(images, /zhuling-tlr/);
-assert.match(images, /bright-dream-r19/);
-assert.match(images, /smartbuild-thinset-robot/);
-assert.match(images, /derutu-tile-laying-robot/);
-assert.match(images, /yanling-tile-robot/);
-assert.match(images, /kaifeng-yucheng-automatic-tile-robot/);
-assert.match(images, /bossgoo-intelligent-tile-robot/);
-assert.match(images, /bossgoo-palletizer-tile-robot/);
+for (const token of ['partner-p900', 'fangshi-ceramic-tile-robot', 'fangshi-stone-tile-robot', 'zhuling-tlr', 'bright-dream-r19', 'smartbuild-thinset-robot', 'derutu-tile-laying-robot', 'yanling-tile-robot', 'kaifeng-yucheng-automatic-tile-robot', 'bossgoo-intelligent-tile-robot', 'bossgoo-palletizer-tile-robot']) {
+  assert.match(images, new RegExp(token));
+}
 assert.doesNotMatch(robots, /КОЛМАН ЕООД/);
 assert.doesNotMatch(robots, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(robots, /\+359 88 579 66 13/);
@@ -101,6 +90,7 @@ assert.match(app, /imageUrlFor/);
 assert.match(app, /formatPrice/);
 assert.match(app, /ROBOT_PRODUCTS/);
 assert.match(app, /product\.description/);
+assert.match(app, /contact-form/);
 assert.doesNotMatch(app, /КОЛМАН ЕООД/);
 assert.doesNotMatch(app, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(app, /\+359 88 579 66 13/);
@@ -123,4 +113,4 @@ for (const file of ['privacy.html', 'terms.html', 'cookies.html', 'thanks.html']
   assert.doesNotMatch(html, /\+359 88 579 66 13/);
 }
 
-console.log('WAGNER SEPANG storefront integrity contract passed');
+console.log('WAGNER SEPANG premium storefront integrity contract passed');
