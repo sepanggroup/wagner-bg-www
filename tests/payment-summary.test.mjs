@@ -15,5 +15,11 @@ assert.match(payment, /paypal-payment-total/);
 assert.match(payment, /renderPaymentSummary/);
 assert.match(payment, /cartSubtotal\(productById\)/);
 assert.match(payment, /cartHasNonPurchasableItems\(productById\)/);
+assert.match(payment, /payableCartState/);
+assert.match(payment, /paypalme\/my\/grab/);
+assert.match(payment, /\/\$\{amount\}EUR/);
+assert.doesNotMatch(payment, /ncp\/payment\/653GFDV8Z76G2/);
+assert.match(payment, /fallback\.hidden = true/);
+assert.match(payment, /fallback\.hidden = !state\.payable/);
 
-console.log('WAGNER payment summary contract passed');
+console.log('WAGNER payment summary and cart-driven fallback contract passed');
