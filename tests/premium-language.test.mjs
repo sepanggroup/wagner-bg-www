@@ -38,12 +38,23 @@ assert.match(app, /getLanguage/);
 assert.match(app, /PRODUCT_DESCRIPTIONS_EN/);
 assert.match(app, /product\.blurbEn/);
 assert.match(app, /product\.longDescriptionEn/);
+assert.match(app, /handleProductGridClick/);
+assert.match(app, /productGrid\?\.addEventListener/);
+assert.match(app, /addToCart\(id\)/);
 
 assert.match(productDescriptionsEn, /export const PRODUCT_DESCRIPTIONS_EN/);
 assert.match(productDescriptionsEn, /prospray-320-hea/);
 assert.match(productDescriptionsEn, /partner-p900/);
 assert.match(productDescriptionsEn, /heavycoat-750g-spraypack/);
 assert.match(productDescriptionsEn, /bisonte-paz-7000-2/);
+assert.match(productDescriptionsEn, /bright-dream-r19/);
+assert.match(productDescriptionsEn, /Bright Dream Robotics R-19 is a concept/);
+assert.match(productDescriptionsEn, /Partner Robotics P900 is an autonomous robot/);
+assert.doesNotMatch(productDescriptionsEn, /'partner-p900'[^]*'bright-dream-r19'[\s\S]*longDescriptionEn:\s*'Bright Dream Robotics R-19 is a concept/);
+assert.match(app, /product-descriptions-en\.js\?v=/, 'English product copy must be cache-busted independently');
+
+assert.match(index, /app-v2\.js\?v=20260830-1900/);
+assert.match(index, /i18n\.js\?v=20260830-1900/);
 
 assert.match(premiumVisuals, /premium-product-card/);
 assert.match(premiumVisuals, /product-art/);
