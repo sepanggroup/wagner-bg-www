@@ -6,6 +6,7 @@ export const SUPPORTED_LANGUAGES = Object.freeze({
 const STORAGE_KEY = 'wagner-bg-language';
 const translations = {
   bg: {
+    'brand.company': 'by КОЛМАН ЕООД',
     'nav.catalog': 'Каталог', 'nav.categories': 'Категории', 'nav.about': 'За нас', 'nav.payment': 'Плащане', 'nav.contact': 'Контакти',
     'cart.button': 'Кошница', 'cart.title': 'Твоите продукти', 'cart.empty': 'Кошницата е празна.', 'cart.pay': 'Плати с PayPal →', 'cart.email': 'Поръчай по имейл', 'cart.close': 'Затвори', 'cart.payable': 'Платими продукти', 'cart.note': 'Доставка и крайна оферта се потвърждават при необходимост.',
     'hero.eyebrow': 'WAGNER PROFESSIONAL · SEPANG GROUP', 'hero.title': 'Техниката, която', 'hero.titleAccent': 'работи за вас.', 'hero.lead': 'Професионални машини и системи WAGNER за боядисване, строителни приложения и специализирана автоматизация — подбрани за реална производителност.', 'hero.catalog': 'Разгледай каталога →', 'hero.cart': 'Отвори кошницата', 'hero.meta1': 'системи', 'hero.meta2': 'от каталога', 'hero.meta3': 'плащане',
@@ -25,6 +26,7 @@ const translations = {
     'category.robots.name': 'Роботизирани системи', 'category.robots.desc': 'Автоматизирани решения за полагане на плочки и специализирани строителни приложения.'
   },
   en: {
+    'brand.company': 'by KOLMAN EOOD',
     'nav.catalog': 'Catalog', 'nav.categories': 'Categories', 'nav.about': 'About', 'nav.payment': 'Payment', 'nav.contact': 'Contact',
     'cart.button': 'Cart', 'cart.title': 'Your products', 'cart.empty': 'Your cart is empty.', 'cart.pay': 'Pay with PayPal →', 'cart.email': 'Order by email', 'cart.close': 'Close', 'cart.payable': 'Payable products', 'cart.note': 'Delivery and final offer are confirmed when required.',
     'hero.eyebrow': 'WAGNER PROFESSIONAL · SEPANG GROUP', 'hero.title': 'Equipment that', 'hero.titleAccent': 'works for you.', 'hero.lead': 'Professional WAGNER machines and systems for painting, construction applications and specialized automation — selected for real productivity.', 'hero.catalog': 'Explore catalog →', 'hero.cart': 'Open cart', 'hero.meta1': 'systems', 'hero.meta2': 'from catalog', 'hero.meta3': 'payment',
@@ -32,10 +34,10 @@ const translations = {
     'categories.eyebrow': 'Categories', 'categories.title': 'Choose the right', 'categories.accent': 'technology.', 'categories.lead': 'Airless, XVLP/HVLP, guns and tips, accessories and robotic tile-laying systems.',
     'catalog.eyebrow': 'Catalog', 'catalog.title': 'WAGNER', 'catalog.accent': 'products.', 'catalog.lead': 'Professional catalog with product images, descriptions, technical specifications, video and a clear price or “Price on request”.', 'search.placeholder': 'Search product, model or specification…', 'filter.all': 'All categories', 'catalog.empty': 'No products found.',
     'product.full': 'Full description', 'product.model': 'Model:', 'product.price': 'Price', 'product.buy': 'BUY', 'product.inquiry': 'REQUEST QUOTE', 'product.video': 'Product video →', 'product.reference': 'View product →', 'product.specs': 'Technical specifications', 'product.data': 'Technical data →', 'product.inquiryPrice': 'Price on request',
-    'about.eyebrow': 'SEPANG GROUP LTD', 'about.title': 'WAGNER equipment focused on real work.', 'about.text': 'SEPANG GROUP develops a digital sales channel for professional WAGNER solutions in construction and painting.', 'about.fact1': 'construction and painting equipment', 'about.fact2': 'add directly to cart', 'about.approach': 'Professional approach', 'about.heading': 'Not just a machine.', 'about.accent': 'The right solution.', 'about.p1': 'Before checkout we verify the model, configuration and terms. Catalog prices are clearly identified.', 'about.p2': 'Products with a specific EUR price can be added directly to the cart; quote-based robotic solutions are confirmed individually first.', 'about.contact': 'Contact us →',
-    'payment.eyebrow': 'PAYMENT', 'payment.heading': 'Pay securely', 'payment.accent': 'with PayPal.', 'payment.p1': 'For products with a valid EUR price you can continue to PayPal from the cart. Quote-based products receive a confirmed amount first.', 'payment.p2': 'Payment is processed by PayPal for SEPANG GROUP LTD', 'payment.status': 'Add payable products to the cart to activate PayPal checkout.',
-    'contact.eyebrow': 'CONTACT', 'contact.heading': 'Tell us about the', 'contact.accent': 'task.', 'contact.lead': 'Send a model, photo, quantity or short description of the job.', 'contact.name': 'Name *', 'contact.email': 'Email *', 'contact.message': 'Message *', 'contact.submit': 'Send request →', 'contact.help': 'The form opens a prepared email to SEPANG GROUP LTD.',
-    'footer.nav': 'Navigation', 'footer.info': 'Information', 'footer.privacy': 'Privacy', 'footer.terms': 'Terms', 'footer.cookies': 'Cookies', 'footer.description': 'WAGNER construction and painting equipment.', 'footer.copyright': '© 2026 SEPANG GROUP LTD · WAGNER-BG',
+    'about.eyebrow': 'KOLMAN EOOD', 'about.title': 'WAGNER equipment focused on real work.', 'about.text': 'KOLMAN EOOD develops a digital sales channel for professional WAGNER solutions in construction and painting.', 'about.fact1': 'construction and painting equipment', 'about.fact2': 'add directly to cart', 'about.approach': 'Professional approach', 'about.heading': 'Not just a machine.', 'about.accent': 'The right solution.', 'about.p1': 'Before checkout we verify the model, configuration and terms. Catalog prices are clearly identified.', 'about.p2': 'Products with a specific EUR price can be added directly to the cart; quote-based robotic solutions are confirmed individually first.', 'about.contact': 'Contact us →',
+    'payment.eyebrow': 'PAYMENT', 'payment.heading': 'Pay securely', 'payment.accent': 'with PayPal.', 'payment.p1': 'For products with a valid EUR price you can continue to PayPal from the cart. Quote-based products receive a confirmed amount first.', 'payment.p2': 'Payment is processed by PayPal for KOLMAN EOOD', 'payment.status': 'Add payable products to the cart to activate PayPal checkout.',
+    'contact.eyebrow': 'CONTACT', 'contact.heading': 'Tell us about the', 'contact.accent': 'task.', 'contact.lead': 'Send a model, photo, quantity or short description of the job.', 'contact.name': 'Name *', 'contact.email': 'Email *', 'contact.message': 'Message *', 'contact.submit': 'Send request →', 'contact.help': 'The form opens a prepared email to KOLMAN EOOD.',
+    'footer.nav': 'Navigation', 'footer.info': 'Information', 'footer.privacy': 'Privacy', 'footer.terms': 'Terms', 'footer.cookies': 'Cookies', 'footer.description': 'WAGNER construction and painting equipment.', 'footer.copyright': '© 2026 KOLMAN EOOD · WAGNER-BG',
     'category.airless.name': 'Airless painting', 'category.airless.desc': 'Professional systems for dispersion paints, latex, façade coatings, primers and other materials.',
     'category.xvlp.name': 'XVLP / HVLP', 'category.xvlp.desc': 'Systems for lacquers, enamels, wood, metal and fine finishing applications.',
     'category.guns.name': 'Guns and tips', 'category.guns.desc': 'Professional airless guns, HEA tips and components for different systems.',
@@ -75,6 +77,8 @@ export function applyLanguage(root = document) {
     const value = translations[lang]?.[node.dataset.i18nAria] ?? translations.bg[node.dataset.i18nAria];
     if (value != null) node.setAttribute('aria-label', value);
   });
+  const headerBrandCompany = root.querySelector('.site-header .brand small');
+  if (headerBrandCompany) headerBrandCompany.textContent = translations[lang]?.['brand.company'] ?? translations.bg['brand.company'];
   root.querySelectorAll('[data-lang]').forEach((button) => {
     const active = button.dataset.lang === lang;
     button.classList.toggle('active', active);
