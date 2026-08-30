@@ -3,9 +3,19 @@ import { loadCart, cartSubtotal, cartHasNonPurchasableItems } from './cart.js';
 
 let paypalPromise = null;
 
+function ensureCardContainer(container) {
+  let card = document.querySelector('#paypal-card-button-container');
+  if (!card) {
+    card = document.createElement('div');
+    card.id = 'paypal-card-button-container';
+    card.setAttribute('aria-label', 'Debit or credit card payment');
+    container.insertAdjacentElement('afterend', card);
+  }
+  return card;
+}
+
 export function initCartPayment(productById) {
   const container = document.querySelector('#paypal-button-container');
-  const cardContainer = document.querySelector('#paypal-card-button-container');
   const status = document.querySelector('#paypal-status');
   if (!container || !status) return;
 
@@ -14,20 +24,28 @@ export function initCartPayment(productById) {
     return;
   }
 
-  if (container.dataset.paypalReady === 'true') return;
+  const cardContainer = ensureCardContainer(container);
+  if (container.dataset.paypalReady === 'true' && container.children.length && (!window.paypal || cardContainer.children.length)) return;
+
   status.textContent = 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
 
   loadPayPal(PAYPAL_CLIENT_ID).then(() => {
     if (!window.paypal) throw new Error('PayPal SDK unavailable');
     container.innerHTML = '';
-    if (cardContainer) cardContainer.innerHTML = '';
+    cardContainer.innerHTML = '';
+    container.dataset.paypalReady = 'false';
 
-    const createOrder = (_data, actions) => {
+    const validateCart = () => {
       const cart = loadCart();
       const subtotal = cartSubtotal(productById);
       if (!cart.length) throw new Error('Cart is empty');
       if (cartHasNonPurchasableItems(productById)) throw new Error('Cart contains quote-only or non-EUR items');
       if (!Number.isFinite(subtotal) || subtotal <= 0) throw new Error('No payable EUR products in cart');
+      return { cart, subtotal };
+    };
+
+    const createOrder = (_data, actions) => {
+      const { cart, subtotal } = validateCart();
       const items = cart.map((entry) => {
         const product = productById(entry.id);
         return {
@@ -50,6 +68,11 @@ export function initCartPayment(productById) {
       });
     };
 
+    const onClick = (_data, actions) => {
+      try { validateCart(); return actions.resolve(); }
+      catch { status.textContent = 'Добави платим продукт с валидна EUR цена в кошницата, за да продължиш към плащане.'; return actions.reject(); }
+    };
+
     const onApprove = (data, actions) => actions.order.capture().then((details) => {
       const payer = details?.payer?.name?.given_name || '';
       status.textContent = payer
@@ -62,20 +85,15 @@ export function initCartPayment(productById) {
       container.dataset.paypalReady = 'false';
     };
 
-    const renderers = [
-      window.paypal.Buttons({
-        style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
-        createOrder,
-        onApprove,
-        onError
-      }).render(container)
-    ];
+    const baseOptions = { style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' }, createOrder, onClick, onApprove, onError };
+    const renderers = [window.paypal.Buttons(baseOptions).render(container)];
 
-    if (cardContainer && window.paypal.FUNDING?.CARD) {
+    if (window.paypal.FUNDING?.CARD) {
       renderers.push(window.paypal.Buttons({
         fundingSource: window.paypal.FUNDING.CARD,
         style: { shape: 'rect', layout: 'vertical', label: 'pay' },
         createOrder,
+        onClick,
         onApprove,
         onError
       }).render(cardContainer));
