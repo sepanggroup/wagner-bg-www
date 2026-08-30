@@ -38,6 +38,7 @@
 .paypal-static-fallback{display:grid;gap:10px;margin-top:4px;padding:12px;border-radius:16px;background:#f7f7f4;box-shadow:0 12px 30px rgba(11,16,21,.08)}
 .paypal-static-button{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:8px;text-decoration:none;font-weight:900;letter-spacing:.01em;transition:transform .18s ease,filter .18s ease}
 .paypal-static-button:hover{transform:translateY(-1px);filter:brightness(.98)}
+.paypal-static-button:disabled{opacity:.58;cursor:not-allowed;transform:none;filter:none}
 .paypal-static-paypal{background:#ffc439;color:#003087;font-size:18px}
 .paypal-static-card{background:#5f75ad;color:#fff;font-size:15px}
 .paypal-static-fallback small{text-align:center;color:#667078;font-size:11px;font-weight:700}
@@ -52,6 +53,6 @@
 /* Existing WAGNER hero visual square: retain the KOLMAN logo asset contract and use the same asset explicitly in the DOM. */
 .visual-stamp{font-size:0;letter-spacing:0;background:url('kolman-logo.svg?v=20260830-hero4') center/contain no-repeat !important;filter:drop-shadow(0 12px 24px rgba(0,0,0,.2))}
 .visual-stamp::before{display:none}
-.hero-kolman-logo{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);object-fit:contain;display:block;z-index:2;filter:drop-shadow(0 12px 24px rgba(0,0,0,.2))}
+.hero-kolman-logo{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);object-fit:contain;display:block;z-index:2;filter:drop-shadow(0 12px 24px rgba(11,16,21,.2))}
 .visual-stamp{display:none}
 @media(max-width:620px){.visual-stamp{font-size:0}.hero-kolman-logo{inset:8px;width:calc(100% - 16px);height:calc(100% - 16px)}}
