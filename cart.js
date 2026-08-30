@@ -55,7 +55,7 @@ export function cartHasNonPurchasableItems(productsById){
   });
 }
 
-export function cartMailtoSubject(){ return encodeURIComponent('Поръчка WAGNER-BG — SEPANG GROUP ЕООД'); }
+export function cartMailtoSubject(){ return encodeURIComponent(`Поръчка WAGNER-BG — ${MERCHANT.legalName}`); }
 
 export function cartMailtoBody(productsById){
   const lines = loadCart().map(item => {
@@ -72,7 +72,7 @@ export function cartMailtoBody(productsById){
     '',
     'Моля потвърдете наличност, крайна цена и условия за доставка.',
     '',
-    'SEPANG GROUP ЕООД',
+    MERCHANT.legalName,
     MERCHANT.website
   ].join('\n'));
 }
