@@ -28,8 +28,8 @@ assert.match(index, /cart-drawer/);
 assert.match(index, /paypal-button-container/);
 assert.match(index, /contact-form/);
 assert.match(index, /app-v2\.js/);
+assert.match(index, /<small>by КОЛМАН ЕООД<\/small>/);
 assert.doesNotMatch(index, /www\.wagner-bg\.shop/);
-assert.doesNotMatch(index, /КОЛМАН ЕООД/);
 assert.doesNotMatch(index, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
 
