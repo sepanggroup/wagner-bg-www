@@ -36,7 +36,7 @@ assert.doesNotMatch(index, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
 
 assert.match(premium, /\.visual-stamp::before/);
-assert.match(premium, /content:"W"/);
+assert.match(premium, /kolman-logo\.svg/);
 assert.match(premium, /WAGNER/);
 
 assert.match(products, /SEPANG GROUP ЕООД/);
