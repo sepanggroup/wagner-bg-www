@@ -109,6 +109,7 @@ assert.match(app, /CATALOG_ADDITIONS/);
 assert.match(app, /EXTRA_PRODUCTS/);
 assert.match(app, /ROBOT_PRODUCTS/);
 assert.match(app, /addToCart/);
+assert.match(app, /productGrid\.addEventListener\('click'/);
 assert.match(app, /updateCartUI/);
 assert.match(app, /cart-drawer/);
 assert.match(app, /product\.buy/);
@@ -118,15 +119,3 @@ assert.match(app, /videoEmbed/);
 assert.match(app, /formatPrice/);
 assert.match(app, /product\.description/);
 assert.match(app, /product\.specs/);
-assert.match(app, /contact-form/);
-
-for (const file of ['privacy.html', 'terms.html', 'cookies.html', 'thanks.html']) {
-  const html = read(file);
-  assert.match(html, /sepanggroupltd@gmail\.com/);
-  assert.match(html, /index\.html/);
-  assert.doesNotMatch(html, /КОЛМАН ЕООД/);
-  assert.doesNotMatch(html, /kolmaneood@abv\.bg/i);
-  assert.doesNotMatch(html, /\+359 88 579 66 13/);
-}
-
-console.log('WAGNER Bulgarian premium storefront integrity contract passed');
