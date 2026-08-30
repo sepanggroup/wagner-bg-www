@@ -19,7 +19,12 @@ assert.match(payment, /payableCartState/);
 assert.match(payment, /paypalme\/my\/grab/);
 assert.match(payment, /\/\$\{amount\}EUR/);
 assert.doesNotMatch(payment, /ncp\/payment\/653GFDV8Z76G2/);
-assert.match(payment, /fallback\.hidden = true/);
-assert.match(payment, /fallback\.hidden = !state\.payable/);
+assert.match(payment, /fallback\.hidden = false/);
+assert.match(payment, /paypal-static-paypal/);
+assert.match(payment, /paypal-static-card/);
+assert.match(payment, /type="button" disabled/);
+assert.match(payment, /dataset\.payable/);
+assert.match(payment, /container\.dataset\.paypalReady = 'false'/);
+assert.match(payment, /Loading secure PayPal checkout/);
 
-console.log('WAGNER payment summary and cart-driven fallback contract passed');
+console.log('WAGNER payment summary and visible cart-driven PayPal instrument contract passed');
