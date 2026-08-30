@@ -92,8 +92,12 @@ assert.doesNotMatch(merchant, /\+359 88 579 66 13/);
 
 assert.match(payment, /PayPal/);
 assert.match(payment, /createOrder/);
+assert.match(payment, /capture\(\)/);
 assert.match(payment, /merchant-config\.js/);
 assert.match(payment, /currency=EUR/);
+assert.match(payment, /enable-funding=card/);
+assert.match(payment, /FUNDING\.CARD/);
+assert.match(payment, /paypal-card-button-container/);
 assert.match(payment, /KOLMAN EOOD/);
 assert.match(payment, /paypalReady/);
 assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
