@@ -104,9 +104,10 @@ assert.match(payment, /PayPal директно/);
 assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(payment, /\+359 88 579 66 13/);
 
+assert.match(cart, /import \{ MERCHANT \}/);
 assert.match(cart, /addToCart/);
 assert.match(cart, /localStorage/);
-assert.match(cart, /KOLMAN EOOD/);
+assert.match(cart, /MERCHANT\.legalName/);
 assert.match(cart, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(cart, /SEPANG GROUP ЕООД/);
 assert.doesNotMatch(cart, /sepanggroupltd@gmail\.com/i);
