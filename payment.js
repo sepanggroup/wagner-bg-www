@@ -96,7 +96,6 @@ export function initCartPayment(productById) {
 
   const staticFallback = ensureStaticPaymentFallback(status);
   if (!document.querySelector('#paypal-static-fallback')) ensurePayPalMeFallback(status);
-  renderPaymentSummary(productById);
 
   if (!PAYPAL_CLIENT_ID) {
     status.textContent = 'PayPal checkout е подготвен, но липсва Client ID за KOLMAN EOOD.';
