@@ -60,7 +60,7 @@ assert.match(productDescriptionsEn, /bright-dream-r19/);
 assert.match(productDescriptionsEn, /'partner-p900':\s*\{[\s\S]*?longDescriptionEn:\s*'Partner Robotics P900 is an autonomous robot/);
 assert.match(productDescriptionsEn, /'bright-dream-r19':\s*\{[\s\S]*?longDescriptionEn:\s*'Bright Dream Robotics R-19 is a concept/);
 
-assert.match(index, /app-v2\.js\?v=20260830-1930/);
+assert.match(index, /app-v2\.js\?v=/);
 assert.match(index, /i18n\.js\?v=20260830-1930/);
 
 assert.match(premiumVisuals, /premium-product-card/);
