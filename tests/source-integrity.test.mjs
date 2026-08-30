@@ -37,6 +37,7 @@ assert.doesNotMatch(index, /\+359 88 579 66 13/);
 assert.match(premium, /\.visual-stamp::before/);
 assert.match(premium, /kolman-logo\.svg/);
 assert.match(premium, /WAGNER/);
+assert.match(premium, /paypal-static-fallback/);
 
 assert.match(products, /SEPANG GROUP ЕООД/);
 assert.match(products, /WAGNER/);
@@ -100,6 +101,9 @@ assert.match(payment, /paypal-card-button-container/);
 assert.match(payment, /KOLMAN EOOD/);
 assert.match(payment, /paypalReady/);
 assert.match(payment, /https:\/\/www\.paypal\.com\/paypalme\/my\/grab/);
+assert.match(payment, /https:\/\/www\.paypal\.com\/ncp\/payment\/653GFDV8Z76G2/);
+assert.match(payment, /paypal-static-fallback/);
+assert.match(payment, /Дебитна \/ кредитна карта/);
 assert.match(payment, /PayPal директно/);
 assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(payment, /\+359 88 579 66 13/);
