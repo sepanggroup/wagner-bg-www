@@ -80,7 +80,14 @@ function renderProducts() {
     if (original && img.src !== original) { img.src = original; return; }
     const holder = img.closest('.product-art'); if (holder) holder.innerHTML = '<div class="shape"><span>WAGNER</span></div>';
   }, { once: true }));
-  productGrid.querySelectorAll('.buy-product:not([disabled])').forEach((button) => button.addEventListener('click', () => { addToCart(button.dataset.product); updateCartUI(); openCart(); }));
+}
+function handleProductGridClick(event) {
+  const button = event.target.closest('.buy-product');
+  if (!button || button.disabled || !productGrid?.contains(button)) return;
+  const id = button.dataset.product;
+  if (!id || !productById(id)) return;
+  addToCart(id);
+  openCart();
 }
 function renderCart() {
   const items = loadCart().map((entry) => ({ entry, product: productById(entry.id) })).filter(({ product }) => product);
@@ -115,6 +122,7 @@ function setupContact() {
 }
 qs('#open-cart')?.addEventListener('click', openCart);
 qs('#hero-cart')?.addEventListener('click', openCart);
+productGrid?.addEventListener('click', handleProductGridClick);
 qs('#close-cart')?.addEventListener('click', closeCart);
 cartOverlay?.addEventListener('click', closeCart);
 qs('#checkout-cart')?.addEventListener('click', () => { if (!checkoutButton.disabled) qs('#payment')?.scrollIntoView({ behavior: 'smooth' }); closeCart(); });
