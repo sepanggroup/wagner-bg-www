@@ -35,6 +35,13 @@
 .price-note{padding-top:3px}
 .muted-light{color:#b8c1c5}
 .payment-box{box-shadow:0 20px 55px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1)}
+.paypal-static-fallback{display:grid;gap:10px;margin-top:4px;padding:12px;border-radius:16px;background:#f7f7f4;box-shadow:0 12px 30px rgba(11,16,21,.08)}
+.paypal-static-button{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:8px;text-decoration:none;font-weight:900;letter-spacing:.01em;transition:transform .18s ease,filter .18s ease}
+.paypal-static-button:hover{transform:translateY(-1px);filter:brightness(.98)}
+.paypal-static-paypal{background:#ffc439;color:#003087;font-size:18px}
+.paypal-static-card{background:#5f75ad;color:#fff;font-size:15px}
+.paypal-static-fallback small{text-align:center;color:#667078;font-size:11px;font-weight:700}
+.paypal-static-fallback[hidden]{display:none}
 .contact-panel{transition:transform .2s ease,box-shadow .2s ease}
 .contact-panel:hover{transform:translateY(-2px);box-shadow:0 20px 50px rgba(11,16,21,.1)}
 .footer-bottom{padding-top:22px;border-top:1px solid var(--line);margin-top:28px;color:var(--muted);font-size:12px}
