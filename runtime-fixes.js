@@ -1,5 +1,5 @@
 import { addToCart } from './cart.js';
-import { PRODUCT_DESCRIPTIONS_EN } from './product-descriptions-en.js?v=20260830-1900';
+import { PRODUCT_DESCRIPTIONS_EN } from './product-descriptions-en.js?v=20260830-1930';
 
 const PRODUCT_GRID = '#product-grid';
 const CART_BUTTON = '#open-cart';
@@ -19,26 +19,36 @@ function syncEnglishCopy() {
   });
 }
 
-function handleReliableBuy(event) {
-  const button = event.target.closest(`${PRODUCT_GRID} .buy-product`);
-  if (!button || button.disabled) return;
-  const id = button.dataset.product;
-  if (!id) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  addToCart(id);
-  document.querySelector(CART_BUTTON)?.click();
+function bindReliableBuyButtons() {
+  const grid = document.querySelector(PRODUCT_GRID);
+  if (!grid) return;
+  grid.querySelectorAll('.buy-product:not([data-runtime-buy-bound])').forEach((button) => {
+    button.dataset.runtimeBuyBound = 'true';
+    button.addEventListener('click', (event) => {
+      if (button.disabled) return;
+      const id = button.dataset.product;
+      if (!id) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      addToCart(id);
+      document.querySelector(CART_BUTTON)?.click();
+    });
+  });
+}
+
+function syncRuntimeLayer() {
+  syncEnglishCopy();
+  bindReliableBuyButtons();
 }
 
 function initRuntimeFixes() {
   const grid = document.querySelector(PRODUCT_GRID);
   if (!grid) return;
-  grid.addEventListener('click', handleReliableBuy, true);
-  const observer = new MutationObserver(syncEnglishCopy);
+  const observer = new MutationObserver(syncRuntimeLayer);
   observer.observe(grid, { childList: true, subtree: true });
-  document.addEventListener('wagner-language-changed', syncEnglishCopy);
-  document.addEventListener('wagner-language-applied', syncEnglishCopy);
-  syncEnglishCopy();
+  document.addEventListener('wagner-language-changed', syncRuntimeLayer);
+  document.addEventListener('wagner-language-applied', syncRuntimeLayer);
+  syncRuntimeLayer();
 }
 
 if (document.readyState === 'loading') {
