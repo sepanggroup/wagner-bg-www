@@ -17,6 +17,7 @@ function ensureStaticPaymentFallback(status) {
       <small>Сигурно плащане чрез PayPal</small>`;
     status.insertAdjacentElement('afterend', fallback);
   }
+  fallback.hidden = false;
   return fallback;
 }
 
@@ -63,7 +64,7 @@ export function initCartPayment(productById) {
 
   const cardContainer = ensureCardContainer(container);
   if (container.dataset.paypalReady === 'true' && container.children.length && (!window.paypal || cardContainer.children.length)) {
-    staticFallback.hidden = true;
+    staticFallback.hidden = false;
     return;
   }
 
@@ -143,7 +144,7 @@ export function initCartPayment(productById) {
 
     return Promise.all(renderers).then(() => {
       container.dataset.paypalReady = 'true';
-      staticFallback.hidden = true;
+      staticFallback.hidden = false;
     });
   }).catch(() => {
     container.dataset.paypalReady = 'false';
