@@ -7,7 +7,7 @@ import { EXTRA_PRODUCTS } from './extra-products.js';
 import { CATALOG_ADDITIONS } from './catalog-additions.js';
 import { MERCHANT } from './merchant-config.js';
 import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount, cartSubtotal, cartHasNonPurchasableItems, cartMailtoBody } from './cart.js';
-import { initCartPayment } from './payment.js?v=20260830-1840';
+import { initCartPayment, renderPaymentSummary } from './payment.js?v=20260830-1840';
 import { applyLanguage, getLanguage, t } from './i18n.js';
 import { PRODUCT_DESCRIPTIONS_EN } from './product-descriptions-en.js';
 
@@ -106,7 +106,7 @@ function renderCart() {
   checkoutButton.disabled = !items.length || hasQuotes || subtotal <= 0;
   cartNote.textContent = hasQuotes ? (getLanguage() === 'bg' ? 'Кошницата съдържа продукт с цена при запитване. Потвърждаваме офертата преди плащане.' : 'The cart contains a quote-based product. We confirm the offer before payment.') : (getLanguage() === 'bg' ? 'Платимите продукти са в EUR и са подготвени за PayPal checkout.' : 'Payable products are in EUR and ready for PayPal checkout.');
 }
-function updateCartUI() { renderCart(); initCartPayment(productById); }
+function updateCartUI() { renderCart(); renderPaymentSummary(productById); initCartPayment(productById); }
 function setupMenu() {
   const menu = qs('.menu'), nav = qs('#main-nav');
   menu?.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', String(open)); });
