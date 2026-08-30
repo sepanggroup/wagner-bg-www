@@ -40,7 +40,7 @@
 @media(max-width:900px){.language-switcher{margin-left:0}.catalog-tools{top:72px}.nav{gap:10px}.cart-button{margin-left:auto}}
 @media(max-width:620px){.language-switcher{order:2}.cart-button{order:3}.menu{order:1}.brand{order:0}.catalog-tools{position:relative;top:auto}.product-badge{font-size:8px}.machine-panel{padding:16px}.visual-stamp{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.premium-product-card .product-art img,.contact-panel,.category-card:after{transition:none}}
-/* Keep the existing hero composition intact while using the existing visual square as the WAGNER logo panel. */
-.visual-stamp{grid-template-rows:auto auto;gap:14px;letter-spacing:.16em}
-.visual-stamp::before{content:"W";width:86px;height:86px;display:grid;place-items:center;border-radius:18px;background:var(--ink);color:var(--accent);border:1px solid rgba(255,179,0,.28);box-shadow:0 16px 38px rgba(0,0,0,.34);font-size:52px;font-weight:1000;letter-spacing:-.08em;line-height:1}
-@media(max-width:620px){.visual-stamp::before{width:72px;height:72px;font-size:44px}}
+/* Existing hero visual square: display the KOLMAN/WAGNER corporate mark without changing layout. */
+.visual-stamp{font-size:0;letter-spacing:0;background:url('kolman-logo.svg') center/contain no-repeat;filter:drop-shadow(0 12px 24px rgba(0,0,0,.2))}
+.visual-stamp::before{display:none}
+@media(max-width:620px){.visual-stamp{font-size:0}}
