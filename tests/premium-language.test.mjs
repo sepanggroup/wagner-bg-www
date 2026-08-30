@@ -17,7 +17,7 @@ assert.match(index, /data-lang="bg"/);
 assert.match(index, /data-lang="en"/);
 assert.match(index, /i18n\.js/);
 assert.match(index, /premium-visuals\.css/);
-assert.match(index, /runtime-fixes\.js\?v=20260830-1900/);
+assert.match(index, /runtime-fixes\.js\?v=20260830-1930/);
 
 assert.match(i18n, /SUPPORTED_LANGUAGES/);
 assert.match(i18n, /bg:/);
@@ -44,8 +44,9 @@ assert.match(app, /handleProductGridClick/);
 assert.match(app, /productGrid\?\.addEventListener/);
 assert.match(app, /addToCart\(id\)/);
 
-assert.match(runtimeFixes, /product-descriptions-en\.js\?v=20260830-1900/);
+assert.match(runtimeFixes, /product-descriptions-en\.js\?v=20260830-1930/);
 assert.match(runtimeFixes, /syncEnglishCopy/);
+assert.match(runtimeFixes, /bindReliableBuyButtons/);
 assert.match(runtimeFixes, /addToCart\(id\)/);
 assert.match(runtimeFixes, /stopImmediatePropagation/);
 assert.match(runtimeFixes, /wagner-language-changed/);
@@ -59,8 +60,8 @@ assert.match(productDescriptionsEn, /bright-dream-r19/);
 assert.match(productDescriptionsEn, /'partner-p900':\s*\{[\s\S]*?longDescriptionEn:\s*'Partner Robotics P900 is an autonomous robot/);
 assert.match(productDescriptionsEn, /'bright-dream-r19':\s*\{[\s\S]*?longDescriptionEn:\s*'Bright Dream Robotics R-19 is a concept/);
 
-assert.match(index, /app-v2\.js\?v=20260830-1900/);
-assert.match(index, /i18n\.js\?v=20260830-1900/);
+assert.match(index, /app-v2\.js\?v=20260830-1930/);
+assert.match(index, /i18n\.js\?v=20260830-1930/);
 
 assert.match(premiumVisuals, /premium-product-card/);
 assert.match(premiumVisuals, /product-art/);
