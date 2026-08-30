@@ -1,6 +1,7 @@
 import { PAYPAL_CLIENT_ID, MERCHANT } from './merchant-config.js';
 import { loadCart, cartSubtotal, cartHasNonPurchasableItems } from './cart.js';
 
+const PAYPAL_ME_URL = 'https://www.paypal.com/paypalme/my/grab';
 let paypalPromise = null;
 
 function ensureCardContainer(container) {
@@ -14,10 +15,28 @@ function ensureCardContainer(container) {
   return card;
 }
 
+function ensurePayPalMeFallback(status) {
+  let fallback = document.querySelector('#paypal-me-fallback');
+  if (!fallback) {
+    fallback = document.createElement('a');
+    fallback.id = 'paypal-me-fallback';
+    fallback.className = 'btn btn-dark full';
+    fallback.href = PAYPAL_ME_URL;
+    fallback.target = '_blank';
+    fallback.rel = 'noopener noreferrer';
+    fallback.textContent = 'PayPal директно';
+    fallback.setAttribute('aria-label', 'PayPal direct payment for KOLMAN EOOD');
+    status.insertAdjacentElement('afterend', fallback);
+  }
+  return fallback;
+}
+
 export function initCartPayment(productById) {
   const container = document.querySelector('#paypal-button-container');
   const status = document.querySelector('#paypal-status');
   if (!container || !status) return;
+
+  ensurePayPalMeFallback(status);
 
   if (!PAYPAL_CLIENT_ID) {
     status.textContent = 'PayPal checkout е подготвен, но липсва Client ID за KOLMAN EOOD.';
@@ -104,7 +123,7 @@ export function initCartPayment(productById) {
     });
   }).catch(() => {
     container.dataset.paypalReady = 'false';
-    status.textContent = 'PayPal временно не е наличен. Опитайте отново по-късно.';
+    status.textContent = 'PayPal временно не е наличен. Можеш да използваш директното PayPal плащане.';
   });
 }
 
