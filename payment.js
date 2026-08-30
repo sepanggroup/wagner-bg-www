@@ -2,7 +2,23 @@ import { PAYPAL_CLIENT_ID, MERCHANT } from './merchant-config.js';
 import { loadCart, cartSubtotal, cartHasNonPurchasableItems } from './cart.js';
 
 const PAYPAL_ME_URL = 'https://www.paypal.com/paypalme/my/grab';
+const PAYPAL_PAYMENT_LINK = 'https://www.paypal.com/ncp/payment/653GFDV8Z76G2';
 let paypalPromise = null;
+
+function ensureStaticPaymentFallback(status) {
+  let fallback = document.querySelector('#paypal-static-fallback');
+  if (!fallback) {
+    fallback = document.createElement('div');
+    fallback.id = 'paypal-static-fallback';
+    fallback.className = 'paypal-static-fallback';
+    fallback.innerHTML = `
+      <a class="paypal-static-button paypal-static-paypal" href="${PAYPAL_PAYMENT_LINK}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for KOLMAN EOOD">PayPal</a>
+      <a class="paypal-static-button paypal-static-card" href="${PAYPAL_PAYMENT_LINK}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for KOLMAN EOOD">💳 <span>Дебитна / кредитна карта</span></a>
+      <small>Сигурно плащане чрез PayPal</small>`;
+    status.insertAdjacentElement('afterend', fallback);
+  }
+  return fallback;
+}
 
 function ensureCardContainer(container) {
   let card = document.querySelector('#paypal-card-button-container');
@@ -36,17 +52,23 @@ export function initCartPayment(productById) {
   const status = document.querySelector('#paypal-status');
   if (!container || !status) return;
 
+  const staticFallback = ensureStaticPaymentFallback(status);
   ensurePayPalMeFallback(status);
 
   if (!PAYPAL_CLIENT_ID) {
     status.textContent = 'PayPal checkout е подготвен, но липсва Client ID за KOLMAN EOOD.';
+    staticFallback.hidden = false;
     return;
   }
 
   const cardContainer = ensureCardContainer(container);
-  if (container.dataset.paypalReady === 'true' && container.children.length && (!window.paypal || cardContainer.children.length)) return;
+  if (container.dataset.paypalReady === 'true' && container.children.length && (!window.paypal || cardContainer.children.length)) {
+    staticFallback.hidden = true;
+    return;
+  }
 
   status.textContent = 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
+  staticFallback.hidden = false;
 
   loadPayPal(PAYPAL_CLIENT_ID).then(() => {
     if (!window.paypal) throw new Error('PayPal SDK unavailable');
@@ -102,6 +124,7 @@ export function initCartPayment(productById) {
     const onError = () => {
       status.textContent = 'Плащането не беше обработено. Проверете кошницата и опитайте отново.';
       container.dataset.paypalReady = 'false';
+      staticFallback.hidden = false;
     };
 
     const baseOptions = { style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' }, createOrder, onClick, onApprove, onError };
@@ -120,10 +143,12 @@ export function initCartPayment(productById) {
 
     return Promise.all(renderers).then(() => {
       container.dataset.paypalReady = 'true';
+      staticFallback.hidden = true;
     });
   }).catch(() => {
     container.dataset.paypalReady = 'false';
-    status.textContent = 'PayPal временно не е наличен. Можеш да използваш директното PayPal плащане.';
+    staticFallback.hidden = false;
+    status.textContent = 'PayPal временно не е наличен. Можеш да използваш PayPal или карта чрез защитената платежна страница.';
   });
 }
 
