@@ -5,6 +5,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const index = read('index.html');
 const app = read('app-v2.js');
+const runtimeFixes = read('runtime-fixes.js');
 const i18n = read('i18n.js');
 const productDescriptionsEn = read('product-descriptions-en.js');
 const premiumVisuals = read('premium-visuals.css');
@@ -16,6 +17,7 @@ assert.match(index, /data-lang="bg"/);
 assert.match(index, /data-lang="en"/);
 assert.match(index, /i18n\.js/);
 assert.match(index, /premium-visuals\.css/);
+assert.match(index, /runtime-fixes\.js\?v=20260830-1900/);
 
 assert.match(i18n, /SUPPORTED_LANGUAGES/);
 assert.match(i18n, /bg:/);
@@ -42,6 +44,12 @@ assert.match(app, /handleProductGridClick/);
 assert.match(app, /productGrid\?\.addEventListener/);
 assert.match(app, /addToCart\(id\)/);
 
+assert.match(runtimeFixes, /product-descriptions-en\.js\?v=20260830-1900/);
+assert.match(runtimeFixes, /syncEnglishCopy/);
+assert.match(runtimeFixes, /addToCart\(id\)/);
+assert.match(runtimeFixes, /stopImmediatePropagation/);
+assert.match(runtimeFixes, /wagner-language-changed/);
+
 assert.match(productDescriptionsEn, /export const PRODUCT_DESCRIPTIONS_EN/);
 assert.match(productDescriptionsEn, /prospray-320-hea/);
 assert.match(productDescriptionsEn, /partner-p900/);
@@ -50,7 +58,6 @@ assert.match(productDescriptionsEn, /bisonte-paz-7000-2/);
 assert.match(productDescriptionsEn, /bright-dream-r19/);
 assert.match(productDescriptionsEn, /'partner-p900':\s*\{[\s\S]*?longDescriptionEn:\s*'Partner Robotics P900 is an autonomous robot/);
 assert.match(productDescriptionsEn, /'bright-dream-r19':\s*\{[\s\S]*?longDescriptionEn:\s*'Bright Dream Robotics R-19 is a concept/);
-assert.match(app, /product-descriptions-en\.js\?v=/, 'English product copy must be cache-busted independently');
 
 assert.match(index, /app-v2\.js\?v=20260830-1900/);
 assert.match(index, /i18n\.js\?v=20260830-1900/);
