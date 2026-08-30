@@ -70,6 +70,6 @@ assert.match(logo, /WAGNER-BG/);
 assert.match(logo, /KOLMAN EOOD/);
 assert.match(logo, /СТРОИТЕЛНА И БОЯДЖИЙСКА ТЕХНИКА/);
 
-assert.equal(packageJson.scripts.test, 'node tests/source-integrity.test.mjs && node tests/catalog-quality.test.mjs && node tests/premium-language.test.mjs');
+assert.equal(packageJson.scripts.test, 'node tests/source-integrity.test.mjs && node tests/catalog-quality.test.mjs && node tests/premium-language.test.mjs && node tests/payment-summary.test.mjs');
 
 console.log('WAGNER premium visual and language contract passed');
