@@ -94,8 +94,9 @@ assert.match(payment, /PayPal/);
 assert.match(payment, /createOrder/);
 assert.match(payment, /merchant-config\.js/);
 assert.match(payment, /currency=EUR/);
-assert.doesNotMatch(payment, /КОЛМАН ЕООД/);
-assert.doesNotMatch(payment, /kolmaneood@abv\.bg/i);
+assert.match(payment, /KOLMAN EOOD/);
+assert.match(payment, /paypalReady/);
+assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(payment, /\+359 88 579 66 13/);
 
 assert.match(cart, /addToCart/);
