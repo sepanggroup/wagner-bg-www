@@ -9,9 +9,10 @@ import { MERCHANT } from './merchant-config.js';
 import { loadCart, addToCart, setQuantity, removeFromCart, clearCart, cartCount, cartSubtotal, cartHasNonPurchasableItems, cartMailtoBody } from './cart.js';
 import { initCartPayment } from './payment.js';
 import { applyLanguage, getLanguage, t } from './i18n.js';
+import { PRODUCT_DESCRIPTIONS_EN } from './product-descriptions-en.js';
 
 const CATEGORIES = [...STORE.categories.filter((item) => item.id !== 'robots'), ROBOT_CATEGORY];
-const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS, ...EXTRA_PRODUCTS, ...CATALOG_ADDITIONS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}) }));
+const PRODUCTS = [...STORE.products, ...ROBOT_PRODUCTS, ...EXTRA_PRODUCTS, ...CATALOG_ADDITIONS].map((product) => ({ ...product, ...(PRODUCT_COPY[product.id] || {}), ...(ROBOT_COPY[product.id] || {}), ...(PRODUCT_DESCRIPTIONS_EN[product.id] || {}) }));
 const qs = (selector) => document.querySelector(selector);
 const productGrid = qs('#product-grid');
 const categoryGrid = qs('#category-grid');
@@ -27,7 +28,8 @@ const checkoutButton = qs('#checkout-cart');
 function productById(id) { return PRODUCTS.find((item) => item.id === id) || getProduct(id); }
 function categoryById(id) { return getCategory(id) || CATEGORIES.find((item) => item.id === id); }
 function imageUrlFor(product) { return PRODUCT_IMAGE_OVERRIDES[product.id] || product.imageUrl || ''; }
-function detailedDescription(product) { return product.longDescription || product.description || product.blurb || ''; }
+function detailedDescription(product) { return getLanguage() === 'en' ? (product.longDescriptionEn || product.longDescription || product.description || product.blurbEn || product.blurb || '') : (product.longDescription || product.description || product.blurb || ''); }
+function productBlurb(product) { return getLanguage() === 'en' ? (product.blurbEn || product.blurb || '') : (product.blurb || ''); }
 function formatPrice(product) {
   if (!product.priceKnown || !Number.isFinite(product.price) || product.priceCurrency !== 'EUR') return t('product.inquiryPrice');
   return `€${Number(product.price).toLocaleString(getLanguage() === 'bg' ? 'bg-BG' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -52,7 +54,7 @@ function renderProducts() {
   const query = qs('#search')?.value.trim().toLowerCase() || '';
   const category = qs('#category-filter')?.value || 'all';
   const filtered = PRODUCTS.filter((product) => {
-    const haystack = `${product.name} ${product.model || ''} ${product.eyebrow || ''} ${product.blurb || ''} ${detailedDescription(product)} ${(product.specs || []).join(' ')} ${categoryById(product.category)?.name || ''}`.toLowerCase();
+    const haystack = `${product.name} ${product.model || ''} ${product.eyebrow || ''} ${product.blurb || ''} ${product.blurbEn || ''} ${detailedDescription(product)} ${product.longDescriptionEn || ''} ${(product.specs || []).join(' ')} ${categoryById(product.category)?.name || ''}`.toLowerCase();
     return (!query || haystack.includes(query)) && (category === 'all' || product.category === category);
   });
   const cart = loadCart();
@@ -63,7 +65,7 @@ function renderProducts() {
     const purchasable = product.priceKnown && product.priceCurrency === 'EUR' && Number.isFinite(product.price);
     return `<article class="product-card premium-product-card">
       <div class="product-art" aria-label="${escapeHtml(product.name)}">${src ? `<img src="${escapeHtml(src)}" data-original-image="${escapeHtml(imageUrlFor(product))}" alt="${escapeHtml(product.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="shape"><span>${escapeHtml((product.model || 'WAGNER').slice(0, 18))}</span></div>`}<span class="product-badge">${escapeHtml(product.eyebrow || 'PROFESSIONAL')}</span></div>
-      <div class="product-body"><small>${escapeHtml(product.eyebrow || '')}</small><h3>${escapeHtml(product.name)}</h3>${product.model ? `<div class="model">${escapeHtml(t('product.model'))} ${escapeHtml(product.model)}</div>` : ''}<p>${escapeHtml(product.blurb || '')}</p>
+      <div class="product-body"><small>${escapeHtml(product.eyebrow || '')}</small><h3>${escapeHtml(product.name)}</h3>${product.model ? `<div class="model">${escapeHtml(t('product.model'))} ${escapeHtml(product.model)}</div>` : ''}<p>${escapeHtml(productBlurb(product))}</p>
       <details class="product-details"><summary>${escapeHtml(t('product.full'))}</summary><div class="product-description">${escapeHtml(detailedDescription(product))}</div></details>
       ${product.specs?.length ? `<div class="specs" aria-label="${escapeHtml(t('product.specs'))}">${product.specs.map((spec) => `<span>${escapeHtml(spec)}</span>`).join('')}</div>` : ''}
       ${videoEmbed ? `<div class="product-video"><iframe src="${escapeHtml(videoEmbed)}" title="${escapeHtml(product.name)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>` : product.videoUrl ? `<a class="product-link" href="${escapeHtml(product.videoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('product.video'))}</a>` : ''}
