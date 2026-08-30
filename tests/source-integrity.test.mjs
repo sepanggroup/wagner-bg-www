@@ -100,6 +100,8 @@ assert.match(payment, /FUNDING\.CARD/);
 assert.match(payment, /paypal-card-button-container/);
 assert.match(payment, /KOLMAN EOOD/);
 assert.match(payment, /paypalReady/);
+assert.match(payment, /https:\/\/www\.paypal\.com\/paypalme\/my\/grab/);
+assert.match(payment, /PayPalMe fallback/);
 assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(payment, /\+359 88 579 66 13/);
 
