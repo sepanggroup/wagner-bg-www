@@ -20,17 +20,26 @@ function ensureStaticPaymentFallback(status, productById) {
     status.insertAdjacentElement('afterend', fallback);
   }
 
-  const { payable, subtotal } = payableCartState(productById);
+  const { payable, subtotal, cart, hasQuotes } = payableCartState(productById);
   const amount = payable ? subtotal.toFixed(2) : '';
-  const target = payable ? `${PAYPAL_ME_URL}/${amount}EUR` : PAYPAL_ME_URL;
+  const target = payable ? `${PAYPAL_ME_URL}/${amount}EUR` : '';
   const isEnglish = document.documentElement.lang === 'en';
   const amountLabel = payable ? ` €${subtotal.toLocaleString(isEnglish ? 'en-GB' : 'bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '';
+  const disabledLabel = hasQuotes
+    ? (isEnglish ? 'Payment available after quote confirmation' : 'Плащането е достъпно след потвърждение на офертата')
+    : (isEnglish ? 'Add a payable EUR product to activate checkout' : 'Добави платим продукт с EUR цена, за да активираш плащането');
 
   fallback.innerHTML = `
-    <a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for KOLMAN EOOD">PayPal${amountLabel}</a>
-    <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for KOLMAN EOOD">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}</a>
-    <small>${isEnglish ? 'Secure payment via PayPal.Me. The requested amount is taken from the payable cart total.' : 'Сигурно плащане чрез PayPal.Me. Сумата се задава автоматично според платимата кошница.'}</small>`;
-  fallback.hidden = !payable;
+    ${payable
+      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for KOLMAN EOOD">PayPal${amountLabel}</a>
+         <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for KOLMAN EOOD">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}${amountLabel}</a>`
+      : `<button class="paypal-static-button paypal-static-paypal" type="button" disabled aria-disabled="true">PayPal</button>
+         <button class="paypal-static-button paypal-static-card" type="button" disabled aria-disabled="true">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}</button>`}
+    <small>${payable
+      ? (isEnglish ? `Secure payment via PayPal.Me. The amount is taken from the payable cart total${amountLabel}.` : `Сигурно плащане чрез PayPal.Me. Сумата се задава автоматично според платимата кошница${amountLabel}.`)
+      : `${disabledLabel}${cart.length ? '.' : '.'}`}</small>`;
+  fallback.hidden = false;
+  fallback.dataset.payable = payable ? 'true' : 'false';
   return fallback;
 }
 
@@ -94,22 +103,37 @@ export function initCartPayment(productById) {
   const fallback = ensureStaticPaymentFallback(status, productById);
   const state = payableCartState(productById);
 
+  if (!state.payable) {
+    container.innerHTML = '';
+    container.dataset.paypalReady = 'false';
+    document.querySelector('#paypal-card-button-container')?.remove();
+    fallback.hidden = false;
+    status.textContent = state.hasQuotes
+      ? (document.documentElement.lang === 'en' ? 'The cart contains a quote-based product. Confirm the final amount before payment.' : 'Кошницата съдържа продукт с цена при запитване. Потвърди крайната сума преди плащане.')
+      : (document.documentElement.lang === 'en' ? 'Add a payable EUR product to activate PayPal checkout.' : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.');
+    return;
+  }
+
   if (!PAYPAL_CLIENT_ID) {
-    status.textContent = state.payable
+    status.textContent = document.documentElement.lang === 'en'
       ? 'PayPal checkout is unavailable; use the secure PayPal.Me amount below.'
-      : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.';
-    fallback.hidden = !state.payable;
+      : 'PayPal checkout временно не е наличен; използвай защитеното плащане по сумата на кошницата по-долу.';
+    fallback.hidden = false;
     return;
   }
 
   const cardContainer = ensureCardContainer(container);
   if (container.dataset.paypalReady === 'true' && container.children.length) {
     fallback.hidden = true;
-    status.textContent = state.payable ? 'Плати сигурно с PayPal или с дебитна/кредитна карта.' : 'Добави платим продукт с валидна EUR цена в кошницата, за да продължиш към плащане.';
+    status.textContent = document.documentElement.lang === 'en'
+      ? 'Pay securely with PayPal or debit/credit card.'
+      : 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
     return;
   }
 
-  status.textContent = state.payable ? 'Плати сигурно с PayPal или с дебитна/кредитна карта.' : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.';
+  status.textContent = document.documentElement.lang === 'en'
+    ? 'Loading secure PayPal checkout…'
+    : 'Зарежда се сигурният PayPal checkout…';
 
   loadPayPal(PAYPAL_CLIENT_ID).then(() => {
     if (!window.paypal?.Buttons) throw new Error('PayPal SDK unavailable');
@@ -151,7 +175,12 @@ export function initCartPayment(productById) {
 
     const onClick = (_data, actions) => {
       try { validateCart(); return actions.resolve(); }
-      catch { status.textContent = 'Добави платим продукт с валидна EUR цена в кошницата, за да продължиш към плащане.'; return actions.reject(); }
+      catch {
+        status.textContent = document.documentElement.lang === 'en'
+          ? 'Add a payable EUR product to the cart before continuing.'
+          : 'Добави платим продукт с валидна EUR цена в кошницата, преди да продължиш.';
+        return actions.reject();
+      }
     };
 
     const onApprove = (data, actions) => actions.order.capture().then((details) => {
@@ -164,7 +193,7 @@ export function initCartPayment(productById) {
     const onError = () => {
       container.dataset.paypalReady = 'false';
       const current = payableCartState(productById);
-      fallback.hidden = !current.payable;
+      ensureStaticPaymentFallback(status, productById).hidden = false;
       status.textContent = current.payable
         ? 'PayPal checkout временно не е наличен. Използвай защитеното плащане по сумата на кошницата по-долу.'
         : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.';
@@ -187,15 +216,14 @@ export function initCartPayment(productById) {
     return Promise.all(renderers).then(() => {
       container.dataset.paypalReady = 'true';
       fallback.hidden = true;
-      status.textContent = state.payable ? 'Плати сигурно с PayPal или с дебитна/кредитна карта.' : 'Добави платим продукт с валидна EUR цена в кошницата, за да продължиш към плащане.';
+      status.textContent = 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
     });
   }).catch(() => {
     container.dataset.paypalReady = 'false';
-    const current = payableCartState(productById);
-    fallback.hidden = !current.payable;
-    status.textContent = current.payable
-      ? 'PayPal checkout временно не е наличен. Използвай защитеното плащане по сумата на кошницата по-долу.'
-      : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.';
+    ensureStaticPaymentFallback(status, productById).hidden = false;
+    status.textContent = document.documentElement.lang === 'en'
+      ? 'PayPal checkout is temporarily unavailable. Use the secure cart amount below.'
+      : 'PayPal checkout временно не е наличен. Използвай защитеното плащане по сумата на кошницата по-долу.';
   });
 }
 
