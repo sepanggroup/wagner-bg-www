@@ -13,6 +13,7 @@ const payment = read('payment.js');
 const merchant = read('merchant-config.js');
 const cart = read('cart.js');
 const app = read('app-v2.js');
+const premium = read('premium-visuals.css');
 
 assert.match(index, /<html lang="bg">/);
 assert.match(index, /<link rel="canonical" href="https:\/\/sepanggroup\.github\.io\/wagner-bg-www\/">/);
@@ -23,6 +24,7 @@ assert.match(index, /SEPANG GROUP ЕООД/);
 assert.match(index, /data-i18n="hero\.title">Техниката, която<\/span>/);
 assert.match(index, /data-i18n="hero\.titleAccent">работи за вас\.<\/em>/);
 assert.match(index, /\+359 88 503 9931/);
+assert.match(index, /kolmaneood@abv\.bg/i);
 assert.match(index, /КУПИ/);
 assert.match(index, /cart-drawer/);
 assert.match(index, /paypal-button-container/);
@@ -30,8 +32,12 @@ assert.match(index, /contact-form/);
 assert.match(index, /app-v2\.js/);
 assert.match(index, /<small>by КОЛМАН ЕООД<\/small>/);
 assert.doesNotMatch(index, /www\.wagner-bg\.shop/);
-assert.doesNotMatch(index, /kolmaneood@abv\.bg/i);
+assert.doesNotMatch(index, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
+
+assert.match(premium, /\.visual-stamp::before/);
+assert.match(premium, /content:"W"/);
+assert.match(premium, /WAGNER/);
 
 assert.match(products, /SEPANG GROUP ЕООД/);
 assert.match(products, /WAGNER/);
