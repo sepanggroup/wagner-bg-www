@@ -48,6 +48,47 @@ function ensurePayPalMeFallback(status) {
   return fallback;
 }
 
+export function renderPaymentSummary(productById) {
+  const summary = document.querySelector('#paypal-payment-summary');
+  const itemsEl = document.querySelector('#paypal-payment-items');
+  const totalEl = document.querySelector('#paypal-payment-total');
+  const titleEl = document.querySelector('#paypal-payment-summary-title');
+  const totalLabelEl = document.querySelector('#paypal-payment-total-label');
+  if (!summary || !itemsEl || !totalEl) return;
+
+  const isEnglish = document.documentElement.lang === 'en';
+  if (titleEl) titleEl.textContent = isEnglish ? 'Payment order' : 'Поръчка за плащане';
+  if (totalLabelEl) totalLabelEl.textContent = isEnglish ? 'Total' : 'Общо';
+
+  const items = loadCart().map((entry) => ({ entry, product: productById(entry.id) })).filter(({ product }) => product);
+  if (!items.length) {
+    itemsEl.replaceChildren();
+    totalEl.textContent = '€0.00';
+    summary.hidden = true;
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  for (const { entry, product } of items) {
+    const row = document.createElement('div');
+    row.className = 'selected-row';
+    const name = document.createElement('strong');
+    name.textContent = `${product.name}${product.model ? ` · ${product.model}` : ''} × ${entry.quantity}`;
+    const amount = document.createElement('strong');
+    const payable = product.priceKnown && product.priceCurrency === 'EUR' && Number.isFinite(product.price);
+    amount.textContent = payable
+      ? `€${(product.price * entry.quantity).toLocaleString(isEnglish ? 'en-GB' : 'bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+      : (isEnglish ? 'Price on request' : 'Цена при запитване');
+    row.append(name, amount);
+    fragment.appendChild(row);
+  }
+  itemsEl.replaceChildren(fragment);
+
+  const subtotal = cartSubtotal(productById);
+  totalEl.textContent = `€${subtotal.toLocaleString(isEnglish ? 'en-GB' : 'bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  summary.hidden = false;
+}
+
 export function initCartPayment(productById) {
   const container = document.querySelector('#paypal-button-container');
   const status = document.querySelector('#paypal-status');
@@ -55,6 +96,7 @@ export function initCartPayment(productById) {
 
   const staticFallback = ensureStaticPaymentFallback(status);
   if (!document.querySelector('#paypal-static-fallback')) ensurePayPalMeFallback(status);
+  renderPaymentSummary(productById);
 
   if (!PAYPAL_CLIENT_ID) {
     status.textContent = 'PayPal checkout е подготвен, но липсва Client ID за KOLMAN EOOD.';
