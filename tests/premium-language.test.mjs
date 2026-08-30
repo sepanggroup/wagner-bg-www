@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const index = read('index.html');
 const app = read('app-v2.js');
 const i18n = read('i18n.js');
+const productDescriptionsEn = read('product-descriptions-en.js');
 const packageJson = JSON.parse(read('package.json'));
 
 assert.match(index, /data-lang-switcher/);
@@ -32,6 +33,15 @@ assert.match(app, /wagner-language-changed/);
 assert.match(app, /t\('product\.buy'\)/);
 assert.match(app, /t\('product\.inquiry'\)/);
 assert.match(app, /getLanguage/);
+assert.match(app, /PRODUCT_DESCRIPTIONS_EN/);
+assert.match(app, /product\.blurbEn/);
+assert.match(app, /product\.longDescriptionEn/);
+
+assert.match(productDescriptionsEn, /export const PRODUCT_DESCRIPTIONS_EN/);
+assert.match(productDescriptionsEn, /prospray-320-hea/);
+assert.match(productDescriptionsEn, /partner-p900/);
+assert.match(productDescriptionsEn, /heavycoat-750g-spraypack/);
+assert.match(productDescriptionsEn, /bisonte-paz-7000-2/);
 
 assert.match(read('premium-visuals.css'), /premium-product-card/);
 assert.match(read('premium-visuals.css'), /product-art/);
