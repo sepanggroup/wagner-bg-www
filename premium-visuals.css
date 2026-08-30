@@ -9,6 +9,8 @@
 .hero-grid,.section>.wrap{position:relative;z-index:1}
 .hero .actions .btn{box-shadow:0 10px 30px rgba(0,0,0,.14)}
 .hero .btn-accent{box-shadow:0 14px 34px rgba(255,179,0,.18)}
+.hero .btn-outline{color:#fff;border-color:#5a646c;background:transparent}
+.hero .btn-outline:hover{color:var(--ink);background:#fff;border-color:#fff}
 .machine-panel{position:relative;overflow:hidden;box-shadow:var(--premium-shadow)}
 .machine-panel:after{content:"";position:absolute;width:180px;height:180px;right:-80px;top:-90px;border-radius:50%;background:rgba(255,179,0,.12);filter:blur(4px)}
 .machine-visual{position:relative;background:radial-gradient(circle at 50% 50%,rgba(255,179,0,.12),transparent 38%),linear-gradient(145deg,#2c3740,#0a1015)}
@@ -38,9 +40,9 @@
 .footer-bottom{padding-top:22px;border-top:1px solid var(--line);margin-top:28px;color:var(--muted);font-size:12px}
 .cart-drawer{box-shadow:-24px 0 70px rgba(11,16,21,.18)}
 @media(max-width:900px){.language-switcher{margin-left:0}.catalog-tools{top:72px}.nav{gap:10px}.cart-button{margin-left:auto}}
-@media(max-width:620px){.language-switcher{order:2}.cart-button{order:3}.menu{order:1}.brand{order:0}.catalog-tools{position:relative;top:auto}.product-badge{font-size:8px}.machine-panel{padding:16px}.visual-stamp{font-size:25px}}
+@media(max-width:620px){.language-switcher{order:2}.cart-button{order:3}.menu{order:1}.brand{order:0}.catalog-tools{position:relative;top:auto}.product-badge{font-size:8px}.machine-panel{padding:16px}.visual-stamp{font-size:0}}
 @media(prefers-reduced-motion:reduce){.premium-product-card .product-art img,.contact-panel,.category-card:after{transition:none}}
 /* Existing hero visual square: display the KOLMAN/WAGNER corporate mark without changing layout. */
-.visual-stamp{font-size:0;letter-spacing:0;background:url('kolman-logo.svg') center/contain no-repeat;filter:drop-shadow(0 12px 24px rgba(0,0,0,.2))}
+.visual-stamp{font-size:0;letter-spacing:0;background:url('kolman-logo.svg?v=20260830-hero2') center/contain no-repeat !important;filter:drop-shadow(0 12px 24px rgba(0,0,0,.2))}
 .visual-stamp::before{display:none}
 @media(max-width:620px){.visual-stamp{font-size:0}}
