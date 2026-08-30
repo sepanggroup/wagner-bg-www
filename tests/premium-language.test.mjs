@@ -5,6 +5,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const index = read('index.html');
 const app = read('app-v2.js');
+const i18n = read('i18n.js');
 const packageJson = JSON.parse(read('package.json'));
 
 assert.match(index, /data-lang-switcher/);
@@ -13,18 +14,24 @@ assert.match(index, /data-lang="en"/);
 assert.match(index, /i18n\.js/);
 assert.match(index, /premium-visuals\.css/);
 
-const i18n = read('i18n.js');
 assert.match(i18n, /SUPPORTED_LANGUAGES/);
 assert.match(i18n, /bg:/);
 assert.match(i18n, /en:/);
 assert.match(i18n, /localStorage/);
+assert.match(i18n, /export function setLanguage/);
+assert.match(i18n, /URLSearchParams/);
+assert.match(i18n, /searchParams\.set\('lang', lang\)/);
 assert.match(i18n, /wagner-language-changed/);
 assert.match(i18n, /document\.documentElement\.lang/);
+assert.match(i18n, /data-i18n/);
+assert.match(i18n, /data-i18n-placeholder/);
+assert.match(i18n, /data-i18n-aria/);
 
 assert.match(app, /applyLanguage/);
 assert.match(app, /wagner-language-changed/);
-assert.match(app, /data-i18n/);
-assert.match(app, /data-i18n-placeholder/);
+assert.match(app, /t\('product\.buy'\)/);
+assert.match(app, /t\('product\.inquiry'\)/);
+assert.match(app, /getLanguage/);
 
 assert.match(read('premium-visuals.css'), /premium-product-card/);
 assert.match(read('premium-visuals.css'), /product-art/);
