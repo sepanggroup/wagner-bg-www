@@ -6,7 +6,7 @@ export const SUPPORTED_LANGUAGES = Object.freeze({
 const STORAGE_KEY = 'wagner-bg-language';
 const translations = {
   bg: {
-    'brand.company': 'by КОЛМАН ЕООД',
+    'brand.company': 'Строителна и бояджийска техника · КОЛМАН ЕООД',
     'nav.catalog': 'Каталог', 'nav.categories': 'Категории', 'nav.about': 'За нас', 'nav.payment': 'Плащане', 'nav.contact': 'Контакти',
     'cart.button': 'Кошница', 'cart.title': 'Твоите продукти', 'cart.empty': 'Кошницата е празна.', 'cart.pay': 'Плати с PayPal →', 'cart.email': 'Поръчай по имейл', 'cart.close': 'Затвори', 'cart.payable': 'Платими продукти', 'cart.note': 'Доставка и крайна оферта се потвърждават при необходимост.',
     'hero.eyebrow': 'WAGNER PROFESSIONAL · SEPANG GROUP', 'hero.title': 'Техниката, която', 'hero.titleAccent': 'работи за вас.', 'hero.lead': 'Професионални машини и системи WAGNER за боядисване, строителни приложения и специализирана автоматизация — подбрани за реална производителност.', 'hero.catalog': 'Разгледай каталога →', 'hero.cart': 'Отвори кошницата', 'hero.meta1': 'системи', 'hero.meta2': 'от каталога', 'hero.meta3': 'плащане',
@@ -26,7 +26,7 @@ const translations = {
     'category.robots.name': 'Роботизирани системи', 'category.robots.desc': 'Автоматизирани решения за полагане на плочки и специализирани строителни приложения.'
   },
   en: {
-    'brand.company': 'by KOLMAN EOOD',
+    'brand.company': 'Construction & Painting Equipment · KOLMAN EOOD',
     'nav.catalog': 'Catalog', 'nav.categories': 'Categories', 'nav.about': 'About', 'nav.payment': 'Payment', 'nav.contact': 'Contact',
     'cart.button': 'Cart', 'cart.title': 'Your products', 'cart.empty': 'Your cart is empty.', 'cart.pay': 'Pay with PayPal →', 'cart.email': 'Order by email', 'cart.close': 'Close', 'cart.payable': 'Payable products', 'cart.note': 'Delivery and final offer are confirmed when required.',
     'hero.eyebrow': 'WAGNER PROFESSIONAL · SEPANG GROUP', 'hero.title': 'Equipment that', 'hero.titleAccent': 'works for you.', 'hero.lead': 'Professional WAGNER machines and systems for painting, construction applications and specialized automation — selected for real productivity.', 'hero.catalog': 'Explore catalog →', 'hero.cart': 'Open cart', 'hero.meta1': 'systems', 'hero.meta2': 'from catalog', 'hero.meta3': 'payment',
