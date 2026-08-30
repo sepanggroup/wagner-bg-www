@@ -7,6 +7,8 @@ const index = read('index.html');
 const app = read('app-v2.js');
 const i18n = read('i18n.js');
 const productDescriptionsEn = read('product-descriptions-en.js');
+const premiumVisuals = read('premium-visuals.css');
+const logo = read('kolman-logo.svg');
 const packageJson = JSON.parse(read('package.json'));
 
 assert.match(index, /data-lang-switcher/);
@@ -43,9 +45,13 @@ assert.match(productDescriptionsEn, /partner-p900/);
 assert.match(productDescriptionsEn, /heavycoat-750g-spraypack/);
 assert.match(productDescriptionsEn, /bisonte-paz-7000-2/);
 
-assert.match(read('premium-visuals.css'), /premium-product-card/);
-assert.match(read('premium-visuals.css'), /product-art/);
-assert.match(read('premium-visuals.css'), /@media/);
+assert.match(premiumVisuals, /premium-product-card/);
+assert.match(premiumVisuals, /product-art/);
+assert.match(premiumVisuals, /kolman-logo\.svg/);
+assert.match(premiumVisuals, /\.visual-stamp/);
+assert.match(logo, /WAGNER-BG/);
+assert.match(logo, /KOLMAN EOOD/);
+assert.match(logo, /СТРОИТЕЛНА И БОЯДЖИЙСКА ТЕХНИКА/);
 
 assert.equal(packageJson.scripts.test, 'node tests/source-integrity.test.mjs && node tests/catalog-quality.test.mjs && node tests/premium-language.test.mjs');
 
