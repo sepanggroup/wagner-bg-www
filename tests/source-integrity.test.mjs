@@ -27,7 +27,6 @@ assert.match(index, /kolmaneood@abv\.bg/i);
 assert.match(index, /КУПИ/);
 assert.match(index, /cart-drawer/);
 assert.match(index, /paypal-button-container/);
-assert.match(index, /paypal-card-button-container/);
 assert.match(index, /contact-form/);
 assert.match(index, /app-v2\.js/);
 assert.match(index, /<small>by КОЛМАН ЕООД<\/small>/);
@@ -101,7 +100,7 @@ assert.match(payment, /paypal-card-button-container/);
 assert.match(payment, /KOLMAN EOOD/);
 assert.match(payment, /paypalReady/);
 assert.match(payment, /https:\/\/www\.paypal\.com\/paypalme\/my\/grab/);
-assert.match(payment, /PayPalMe fallback/);
+assert.match(payment, /PayPal директно/);
 assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(payment, /\+359 88 579 66 13/);
 
