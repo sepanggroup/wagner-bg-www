@@ -16,7 +16,7 @@ assert.match(payment, /renderPaymentSummary/);
 assert.match(payment, /cartSubtotal\(productById\)/);
 assert.match(payment, /cartHasNonPurchasableItems\(productById\)/);
 assert.match(payment, /payableCartState/);
-assert.match(payment, /paypal\.me\/1968428713/);
+assert.match(payment, /https:\/\/www\.paypal\.com\/paypalme\/1968428713/);
 assert.match(payment, /\/\$\{amount\}EUR/);
 assert.doesNotMatch(payment, /paypalme\/my\/grab/);
 assert.doesNotMatch(payment, /ncp\/payment\/653GFDV8Z76G2/);
