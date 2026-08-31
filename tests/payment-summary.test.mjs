@@ -28,4 +28,16 @@ assert.match(payment, /dataset\.payable/);
 assert.match(payment, /container\.dataset\.paypalReady = 'false'/);
 assert.match(payment, /Loading secure PayPal checkout/);
 
-console.log('WAGNER payment summary and visible cart-driven PayPal instrument contract passed');
+// Regression: a browser storage failure must not prevent a product from entering the cart.
+globalThis.localStorage = {
+  getItem() { throw new Error('storage unavailable'); },
+  setItem() { throw new Error('storage unavailable'); },
+  removeItem() { throw new Error('storage unavailable'); }
+};
+globalThis.window = { dispatchEvent() {} };
+const cart = await import(`../cart.js?storage-regression=${Date.now()}`);
+cart.clearCart();
+assert.doesNotThrow(() => cart.addToCart('prospray-320-hea'));
+assert.equal(cart.cartCount(), 1);
+
+console.log('WAGNER payment summary and resilient cart persistence contract passed');
