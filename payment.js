@@ -1,7 +1,7 @@
 import { PAYPAL_CLIENT_ID, MERCHANT } from './merchant-config.js';
 import { loadCart, cartSubtotal, cartHasNonPurchasableItems } from './cart.js';
 
-const PAYPAL_ME_URL = 'https://www.paypal.com/paypalme/my/grab';
+const PAYPAL_ME_URL = 'https://www.paypal.com/paypalme/1968428713';
 let paypalPromise = null;
 
 function payableCartState(productById) {
