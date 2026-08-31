@@ -1,22 +1,29 @@
 import { MERCHANT } from './merchant-config.js';
 
 export const CART_KEY = 'wagnerCart';
+let memoryCart = [];
+
+function cloneCart(cart){ return cart.map((item) => ({ ...item })); }
 
 export function loadCart(){
   try {
     const parsed = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-    return Array.isArray(parsed) ? parsed.filter(item => item && item.id && Number.isInteger(item.quantity) && item.quantity > 0) : [];
-  } catch {
-    return [];
-  }
+    if (Array.isArray(parsed)) {
+      memoryCart = parsed.filter(item => item && item.id && Number.isInteger(item.quantity) && item.quantity > 0);
+      return cloneCart(memoryCart);
+    }
+  } catch {}
+  return cloneCart(memoryCart);
 }
 
 export function saveCart(cart){
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  window.dispatchEvent(new CustomEvent('wagner-cart-updated', { detail: cart }));
+  memoryCart = Array.isArray(cart) ? cloneCart(cart) : [];
+  try { localStorage.setItem(CART_KEY, JSON.stringify(memoryCart)); } catch {}
+  window.dispatchEvent(new CustomEvent('wagner-cart-updated', { detail: cloneCart(memoryCart) }));
 }
 
 export function addToCart(id){
+  if (!id) return;
   const cart = loadCart();
   const existing = cart.find(item => item.id === id);
   if (existing) existing.quantity += 1;
