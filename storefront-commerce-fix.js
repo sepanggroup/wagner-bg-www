@@ -80,6 +80,7 @@ function interceptProductClicks() {
 }
 
 function boot() {
+  if (typeof document === 'undefined' || typeof window === 'undefined') return;
   interceptProductClicks();
   const grid = document.querySelector('#product-grid');
   if (grid) new MutationObserver(() => syncProductButtons()).observe(grid, { childList: true });
@@ -90,5 +91,7 @@ function boot() {
   if (note && cartHasNonPurchasableItems(productById)) note.dataset.hasQuoteItems = 'true';
 }
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
-else boot();
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else boot();
+}
