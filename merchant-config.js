@@ -1,3 +1,5 @@
+import './storefront-commerce-fix.js';
+
 export const MERCHANT = {
   legalName: 'KOLMAN EOOD',
   brand: 'WAGNER-BG',
