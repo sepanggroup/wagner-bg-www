@@ -31,8 +31,8 @@ function ensureStaticPaymentFallback(status, productById) {
 
   fallback.innerHTML = `
     ${payable
-      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for KOLMAN EOOD">PayPal${amountLabel}</a>
-         <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for KOLMAN EOOD">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}${amountLabel}</a>`
+      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for ${MERCHANT.legalName}">PayPal${amountLabel}</a>
+         <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for ${MERCHANT.legalName}">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}${amountLabel}</a>`
       : `<button class="paypal-static-button paypal-static-paypal" type="button" disabled aria-disabled="true">PayPal</button>
          <button class="paypal-static-button paypal-static-card" type="button" disabled aria-disabled="true">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}</button>`}
     <small>${payable
