@@ -81,12 +81,12 @@ assert.match(extras, /imageUrl:/);
 assert.match(extras, /longDescription:/);
 assert.match(extras, /specs:/);
 
-assert.match(merchant, /KOLMAN EOOD/);
-assert.match(merchant, /kolmaneood@abv\.bg/i);
+assert.match(merchant, /SEPANG GROUP EOOD/);
+assert.match(merchant, /sepanggroupltd@gmail\.com/i);
 assert.match(merchant, /\+359 88 503 9931/);
 assert.match(merchant, /PAYPAL_CLIENT_ID/);
-assert.doesNotMatch(merchant, /SEPANG GROUP ЕООД/);
-assert.doesNotMatch(merchant, /sepanggroupltd@gmail\.com/);
+assert.doesNotMatch(merchant, /KOLMAN EOOD/);
+assert.doesNotMatch(merchant, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(merchant, /\+359 88 579 66 13/);
 
 assert.match(payment, /PayPal/);
