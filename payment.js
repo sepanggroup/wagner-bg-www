@@ -31,8 +31,8 @@ function ensureStaticPaymentFallback(status, productById) {
 
   fallback.innerHTML = `
     ${payable
-      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for ${MERCHANT.legalName}">PayPal${amountLabel}</a>
-         <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for ${MERCHANT.legalName}">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}${amountLabel}</a>`
+      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for KOLMAN EOOD">PayPal${amountLabel}</a>
+         <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for KOLMAN EOOD">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}${amountLabel}</a>`
       : `<button class="paypal-static-button paypal-static-paypal" type="button" disabled aria-disabled="true">PayPal</button>
          <button class="paypal-static-button paypal-static-card" type="button" disabled aria-disabled="true">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}</button>`}
     <small>${payable
@@ -185,9 +185,10 @@ export function initCartPayment(productById) {
 
     const onApprove = (data, actions) => actions.order.capture().then((details) => {
       const payer = details?.payer?.name?.given_name || '';
+      const isEnglish = document.documentElement.lang === 'en';
       status.textContent = payer
-        ? `Плащането е успешно потвърдено за ${payer}. PayPal Order ID: ${data.orderID}`
-        : `Плащането е успешно потвърдено. PayPal Order ID: ${data.orderID}`;
+        ? (isEnglish ? `Payment successfully confirmed for ${payer}. PayPal Order ID: ${data.orderID}` : `Плащането е успешно потвърдено за ${payer}. PayPal Order ID: ${data.orderID}`)
+        : (isEnglish ? `Payment successfully confirmed. PayPal Order ID: ${data.orderID}` : `Плащането е успешно потвърдено. PayPal Order ID: ${data.orderID}`);
     });
 
     const onError = () => {
@@ -195,8 +196,8 @@ export function initCartPayment(productById) {
       const current = payableCartState(productById);
       ensureStaticPaymentFallback(status, productById).hidden = false;
       status.textContent = current.payable
-        ? 'PayPal checkout временно не е наличен. Използвай защитеното плащане по сумата на кошницата по-долу.'
-        : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.';
+        ? (document.documentElement.lang === 'en' ? 'PayPal checkout is temporarily unavailable. Use the secure cart amount below.' : 'PayPal checkout временно не е наличен. Използвай защитеното плащане по сумата на кошницата по-долу.')
+        : (document.documentElement.lang === 'en' ? 'Add a payable EUR product to the cart to activate PayPal checkout.' : 'Добави платим продукт с валидна EUR цена в кошницата, за да активираш PayPal checkout.');
     };
 
     const baseOptions = { style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' }, createOrder, onClick, onApprove, onError };
@@ -216,7 +217,9 @@ export function initCartPayment(productById) {
     return Promise.all(renderers).then(() => {
       container.dataset.paypalReady = 'true';
       fallback.hidden = true;
-      status.textContent = 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
+      status.textContent = document.documentElement.lang === 'en'
+        ? 'Pay securely with PayPal or debit/credit card.'
+        : 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
     });
   }).catch(() => {
     container.dataset.paypalReady = 'false';
