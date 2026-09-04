@@ -35,13 +35,24 @@ function formatPrice(product) {
   return `€${Number(product.price).toLocaleString(getLanguage() === 'bg' ? 'bg-BG' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 function imageSrc(product) { const original = imageUrlFor(product); return original ? `https://images.weserv.nl/?url=${encodeURIComponent(original)}` : ''; }
-function escapeHtml(value) { return String(value).replace(/[&<>'\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '\"': '&quot;' }[c])); }
+function escapeHtml(value) { return String(value).replace(/[&<>'\\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '\\"': '&quot;' }[c])); }
 function youtubeEmbedUrl(url) { if (!url) return ''; const match = String(url).match(/[?&]v=([^&]+)/); return match ? `https://www.youtube.com/embed/${match[1]}` : ''; }
 function injectMerchantContact() {
   const contact = document.querySelector('.contact-details');
-  if (!contact || contact.querySelector('[data-merchant-phone]')) return;
-  const p = document.createElement('p'); p.dataset.merchantPhone = 'true';
-  const a = document.createElement('a'); a.href = `tel:${MERCHANT.phone.replace(/\s+/g, '')}`; a.textContent = MERCHANT.phone; p.appendChild(a); contact.appendChild(p);
+  if (contact) {
+    const phone = contact.querySelector('a[href^="tel:"]');
+    if (phone) {
+      phone.href = `tel:${MERCHANT.phone.replace(/\s+/g, '')}`;
+      phone.textContent = MERCHANT.phone;
+    }
+    const email = contact.querySelector('a[href^="mailto:"]');
+    if (email) {
+      email.href = `mailto:${MERCHANT.email}`;
+      email.textContent = MERCHANT.email;
+    }
+  }
+  const footerBrandCompany = document.querySelector('.footer .brand small');
+  if (footerBrandCompany) footerBrandCompany.textContent = MERCHANT.brand;
 }
 function openCart() { cartDrawer?.classList.add('open'); cartDrawer?.setAttribute('aria-hidden', 'false'); if (cartOverlay) cartOverlay.hidden = false; document.body.classList.add('cart-open'); renderCart(); }
 function closeCart() { cartDrawer?.classList.remove('open'); cartDrawer?.setAttribute('aria-hidden', 'true'); if (cartOverlay) cartOverlay.hidden = true; document.body.classList.remove('cart-open'); }
