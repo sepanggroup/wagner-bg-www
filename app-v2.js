@@ -137,6 +137,6 @@ applyLanguage();
 injectMerchantContact();
 renderCategories();
 renderProducts();
-updateCartUI();
+updateCartUI(); renderPaymentSummary(productById);
 setupMenu();
 setupContact();
