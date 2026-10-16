@@ -31,27 +31,16 @@ function ensureStaticPaymentFallback(status, productById) {
 
   fallback.innerHTML = `
     ${payable
-      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for ${MERCHANT.legalName}">PayPal${amountLabel}</a>
-         <a class="paypal-static-button paypal-static-card" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="Debit or credit card payment for ${MERCHANT.legalName}">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}${amountLabel}</a>`
-      : `<button class="paypal-static-button paypal-static-paypal" type="button" disabled aria-disabled="true">PayPal</button>
-         <button class="paypal-static-button paypal-static-card" type="button" disabled aria-disabled="true">💳 ${isEnglish ? 'Card / PayPal' : 'Дебитна / кредитна карта'}</button>`}
+      ? `<a class="paypal-static-button paypal-static-paypal" href="${target}" target="_blank" rel="noopener noreferrer" aria-label="PayPal payment for ${MERCHANT.legalName}">PayPal${amountLabel}</a>`
+      : `<button class="paypal-static-button paypal-static-paypal" type="button" disabled aria-disabled="true">PayPal</button>`}
     <small>${payable
-      ? (isEnglish ? `Secure payment via PayPal.Me. The amount is taken from the payable cart total${amountLabel}.` : `Сигурно плащане чрез PayPal.Me. Сумата се задава автоматично според платимата кошница${amountLabel}.`)
-      : `${disabledLabel}${cart.length ? '.' : '.'}`}</small>`;
+      ? (isEnglish
+          ? `PayPal.Me payment for the payable cart total${amountLabel}. This is a PayPal service, not the merchant's bank virtual POS. Bank card payment through the merchant's virtual POS is not enabled on this page.`
+          : `Плащане чрез PayPal.Me за платимата сума в кошницата${amountLabel}. Това е услуга на PayPal, а не банковият виртуален POS на търговеца. Плащането с карта през банковия виртуален POS не е активирано на тази страница.`)
+      : `${disabledLabel}.`}</small>`;
   fallback.hidden = false;
   fallback.dataset.payable = payable ? 'true' : 'false';
   return fallback;
-}
-
-function ensureCardContainer(container) {
-  let card = document.querySelector('#paypal-card-button-container');
-  if (!card) {
-    card = document.createElement('div');
-    card.id = 'paypal-card-button-container';
-    card.setAttribute('aria-label', 'Debit or credit card payment');
-    container.insertAdjacentElement('afterend', card);
-  }
-  return card;
 }
 
 export function renderPaymentSummary(productById) {
@@ -106,7 +95,6 @@ export function initCartPayment(productById) {
   if (!state.payable) {
     container.innerHTML = '';
     container.dataset.paypalReady = 'false';
-    document.querySelector('#paypal-card-button-container')?.remove();
     fallback.hidden = false;
     status.textContent = state.hasQuotes
       ? (document.documentElement.lang === 'en' ? 'The cart contains a quote-based product. Confirm the final amount before payment.' : 'Кошницата съдържа продукт с цена при запитване. Потвърди крайната сума преди плащане.')
@@ -116,18 +104,17 @@ export function initCartPayment(productById) {
 
   if (!PAYPAL_CLIENT_ID) {
     status.textContent = document.documentElement.lang === 'en'
-      ? 'PayPal checkout is unavailable; use the secure PayPal.Me amount below.'
-      : 'PayPal checkout временно не е наличен; използвай защитеното плащане по сумата на кошницата по-долу.';
+      ? 'PayPal checkout is unavailable; use the PayPal.Me option below. It is not the merchant bank virtual POS.'
+      : 'PayPal checkout временно не е наличен; използвай PayPal.Me по-долу. Това не е банковият виртуален POS на търговеца.';
     fallback.hidden = false;
     return;
   }
 
-  const cardContainer = ensureCardContainer(container);
   if (container.dataset.paypalReady === 'true' && container.children.length) {
     fallback.hidden = true;
     status.textContent = document.documentElement.lang === 'en'
-      ? 'Pay securely with PayPal or debit/credit card.'
-      : 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
+      ? 'Pay with PayPal. Bank virtual POS card payment is not enabled here.'
+      : 'Плащане чрез PayPal. Банковото картово плащане през виртуален POS не е активирано тук.';
     return;
   }
 
@@ -138,7 +125,6 @@ export function initCartPayment(productById) {
   loadPayPal(PAYPAL_CLIENT_ID).then(() => {
     if (!window.paypal?.Buttons) throw new Error('PayPal SDK unavailable');
     container.innerHTML = '';
-    cardContainer.innerHTML = '';
     container.dataset.paypalReady = 'false';
 
     const validateCart = () => {
@@ -202,21 +188,10 @@ export function initCartPayment(productById) {
     const baseOptions = { style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' }, createOrder, onClick, onApprove, onError };
     const renderers = [window.paypal.Buttons(baseOptions).render(container)];
 
-    if (window.paypal.FUNDING?.CARD) {
-      renderers.push(window.paypal.Buttons({
-        fundingSource: window.paypal.FUNDING.CARD,
-        style: { shape: 'rect', layout: 'vertical', label: 'pay' },
-        createOrder,
-        onClick,
-        onApprove,
-        onError
-      }).render(cardContainer));
-    }
-
     return Promise.all(renderers).then(() => {
       container.dataset.paypalReady = 'true';
       fallback.hidden = true;
-      status.textContent = 'Плати сигурно с PayPal или с дебитна/кредитна карта.';
+      status.textContent = document.documentElement.lang === 'en' ? 'Pay with PayPal. Bank virtual POS card payment is not enabled here.' : 'Плащане чрез PayPal. Банковото картово плащане през виртуален POS не е активирано тук.';
     });
   }).catch(() => {
     container.dataset.paypalReady = 'false';
@@ -239,7 +214,7 @@ function loadPayPal(clientId) {
       return;
     }
     const script = document.createElement('script');
-    script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=EUR&intent=capture&components=buttons&enable-funding=card`;
+    script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=EUR&intent=capture&components=buttons`;
     script.async = true;
     script.dataset.wagnerPaypal = 'true';
     script.onload = resolve;
