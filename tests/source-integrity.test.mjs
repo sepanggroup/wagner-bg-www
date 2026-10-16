@@ -97,14 +97,14 @@ assert.match(payment, /currency=EUR/);
 assert.doesNotMatch(payment, /enable-funding=card/);
 assert.doesNotMatch(payment, /FUNDING\.CARD/);
 assert.doesNotMatch(payment, /paypal-card-button-container/);
-assert.match(payment, /SEPANG GROUP EOOD/);
+assert.match(payment, /MERCHANT\.legalName/);
 assert.match(payment, /paypalReady/);
 assert.match(payment, /https:\/\/www\.paypal\.com\/paypalme\/1968428713/);
 assert.match(payment, /paypal-static-fallback/);
 assert.match(payment, /PayPal\.Me/);
 assert.doesNotMatch(payment, /https:\/\/www\.paypal\.com\/paypalme\/my\/grab/);
 assert.doesNotMatch(payment, /https:\/\/www\.paypal\.com\/ncp\/payment\/653GFDV8Z76G2/);
-assert.match(payment, /sepanggroupltd@gmail\.com/i);
+assert.doesNotMatch(payment, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(payment, /\+359 88 579 66 13/);
 assert.doesNotMatch(payment, /staticFallback\.hidden = true/);
 
