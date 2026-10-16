@@ -10,7 +10,7 @@ const overrides = read('image-overrides.js');
 const app = read('app-v2.js');
 const index = read('index.html');
 
-assert.match(index, /\+359 88 503 9931/);
+assert.doesNotMatch(index, /\+359 88 503 9931/);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
 assert.match(index, /data-i18n="hero\.title">Техниката, която<\/span>/);
 assert.match(index, /data-i18n="hero\.titleAccent">работи за вас\.<\/em>/);
