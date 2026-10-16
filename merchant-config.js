@@ -2,7 +2,6 @@ export const MERCHANT = {
   legalName: 'SEPANG GROUP EOOD',
   brand: 'SEPANG GROUP',
   email: 'sepanggroupltd@gmail.com',
-  phone: '+359 88 503 9931',
   website: 'https://www.wagner-bg.shop/'
 };
 
