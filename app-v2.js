@@ -39,7 +39,7 @@ function escapeHtml(value) { return String(value).replace(/[&<>'\"]/g, (c) => ({
 function youtubeEmbedUrl(url) { if (!url) return ''; const match = String(url).match(/[?&]v=([^&]+)/); return match ? `https://www.youtube.com/embed/${match[1]}` : ''; }
 function injectMerchantContact() {
   const contact = document.querySelector('.contact-details');
-  if (!contact || contact.querySelector('[data-merchant-phone]')) return;
+  if (!contact || !MERCHANT.phone || contact.querySelector('[data-merchant-phone]')) return;
   const p = document.createElement('p'); p.dataset.merchantPhone = 'true';
   const a = document.createElement('a'); a.href = `tel:${MERCHANT.phone.replace(/\s+/g, '')}`; a.textContent = MERCHANT.phone; p.appendChild(a); contact.appendChild(p);
 }
