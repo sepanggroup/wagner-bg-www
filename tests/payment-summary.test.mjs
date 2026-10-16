@@ -22,7 +22,7 @@ assert.doesNotMatch(payment, /paypalme\/my\/grab/);
 assert.doesNotMatch(payment, /ncp\/payment\/653GFDV8Z76G2/);
 assert.match(payment, /fallback\.hidden = false/);
 assert.match(payment, /paypal-static-paypal/);
-assert.match(payment, /paypal-static-card/);
+assert.doesNotMatch(payment, /paypal-static-card/);
 assert.match(payment, /type="button" disabled/);
 assert.match(payment, /dataset\.payable/);
 assert.match(payment, /container\.dataset\.paypalReady = 'false'/);
