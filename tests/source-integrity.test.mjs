@@ -44,7 +44,7 @@ assert.match(products, /priceType: 'market-reference'/);
 assert.match(products, /priceKnown: true/);
 assert.ok((products.match(/imageUrl:/g) || []).length >= 11, 'Core catalog products must contain product photography');
 assert.match(products, /kolmaneood@abv\.bg/i);
-assert.doesNotMatch(products, /kolmaneood@abv\.bg/i);
+assert.doesNotMatch(products, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(products, /\+359 88 579 66 13/);
 
 assert.match(robots, /ROBOT_CATEGORY/);
