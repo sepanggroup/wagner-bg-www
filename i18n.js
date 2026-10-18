@@ -17,7 +17,7 @@ const translations = {
     'about.eyebrow': 'KOLMAN EOOD', 'about.title': 'WAGNER техника с фокус върху реалната работа.', 'about.text': 'KOLMAN EOOD развива дигитален търговски канал за професионални решения WAGNER в строителството и боядисването.', 'about.fact1': 'строителна и бояджийска техника', 'about.fact2': 'добави директно в кошницата', 'about.approach': 'Професионален подход', 'about.heading': 'Не просто машина.', 'about.accent': 'Правилното решение.', 'about.p1': 'Преди финализиране проверяваме модела, конфигурацията и условията. Цените в каталога са ясно означени.', 'about.p2': 'За продуктите с конкретна EUR цена можеш директно да добавиш в кошницата; за офертните роботизирани решения първо получаваш потвърдена оферта.', 'about.contact': 'Свържи се с нас →',
     'payment.eyebrow': 'Плащане', 'payment.heading': 'Плати сигурно', 'payment.accent': 'с PayPal.', 'payment.p1': 'За продукти с валидна EUR цена можеш да преминеш към PayPal от кошницата. При продукти с цена при запитване първо получаваш потвърдена сума.', 'payment.p2': 'Плащането се обработва от PayPal за KOLMAN EOOD', 'payment.status': 'Добави платими продукти в кошницата, за да активираш PayPal checkout.', 'payment.paypalButton': 'PayPal', 'payment.cardButton': '💳 Дебитна / кредитна карта', 'payment.secureNote': 'Сигурно плащане чрез PayPal',
     'contact.eyebrow': 'Контакти', 'contact.heading': 'Разкажи ни за', 'contact.accent': 'задачата.', 'contact.lead': 'Изпрати модел, снимка, количество или кратко описание на работата.', 'contact.name': 'Име *', 'contact.email': 'Имейл *', 'contact.message': 'Съобщение *', 'contact.submit': 'Изпрати поръчка →', 'contact.help': 'Формата отваря подготвен имейл до KOLMAN EOOD.',
-    'footer.nav': 'Навигация', 'footer.info': 'Информация', 'footer.privacy': 'Поверителност', 'footer.terms': 'Общи условия', 'footer.cookies': 'Бисквитки', 'footer.description': 'Строителна и бояджийска техника WAGNER.', 'footer.copyright': '© 2026 KOLMAN EOOD · WAGNER-BG',
+    'footer.nav': 'Навигация', 'footer.info': 'Информация', 'footer.privacy': 'Поверителност', 'footer.terms': 'Общи условия', 'footer.cookies': 'Бисквитки', 'footer.description': 'Строителна и бояджийска техника WAGNER.', 'footer.copyright': '© 2026 KOLMAN EOOD · KOLMAN EOOD - BG',
     'category.airless.name': 'Airless боядисване', 'category.airless.desc': 'Професионални системи за дисперсии, латекс, фасадни бои, грундове и други покрития.',
     'category.xvlp.name': 'XVLP / HVLP', 'category.xvlp.desc': 'Системи за лакове, емайли, дърво, метал и фини довършителни приложения.',
     'category.guns.name': 'Пистолети и дюзи', 'category.guns.desc': 'Професионални airless пистолети, HEA дюзи и компоненти за различни системи.',
@@ -66,8 +66,8 @@ export function applyLanguage(root = document) {
   const lang = getLanguage();
   document.documentElement.lang = lang;
   document.title = lang === 'en'
-    ? 'WAGNER-BG | Construction & Painting Equipment KOLMAN EOOD'
-    : 'WAGNER-BG | Строителна и бояджийска техника KOLMAN EOOD';
+    ? 'KOLMAN EOOD - BG | Construction & Painting Equipment WAGNER'
+    : 'KOLMAN EOOD - BG | Строителна и бояджийска техника WAGNER';
   root.querySelectorAll('[data-i18n]').forEach((node) => {
     const value = translations[lang]?.[node.dataset.i18n] ?? translations.bg[node.dataset.i18n];
     if (value != null) node.textContent = value;
