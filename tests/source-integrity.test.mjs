@@ -24,13 +24,13 @@ assert.match(index, /application\/ld\+json/);
 assert.match(index, /data-i18n="hero\.title">Техниката, която<\/span>/);
 assert.match(index, /data-i18n="hero\.titleAccent">работи за вас\.<\/em>/);
 assert.doesNotMatch(index, /\+359 88 503 9931/);
-assert.doesNotMatch(index, /kolmaneood@abv\.bg/i);
+assert.match(index, /kolmaneood@abv\.bg/i);
 assert.match(index, /КУПИ/);
 assert.match(index, /cart-drawer/);
 assert.match(index, /paypal-button-container/);
 assert.match(index, /paypal-static-fallback/);
 assert.match(index, /www\.wagner-bg\.shop/);
-assert.match(index, /sepanggroupltd@gmail\.com/i);
+assert.doesNotMatch(index, /sepanggroupltd@gmail\.com/i);
 assert.doesNotMatch(index, /\+359 88 579 66 13/);
 
 assert.match(premium, /\.visual-stamp::before/);
@@ -38,12 +38,12 @@ assert.match(premium, /kolman-logo\.svg/);
 assert.match(premium, /WAGNER/);
 assert.match(premium, /paypal-static-fallback/);
 
-assert.match(products, /SEPANG GROUP ЕООД/);
+assert.match(products, /КОЛМАН ЕООД/);
 assert.match(products, /WAGNER/);
 assert.match(products, /priceType: 'market-reference'/);
 assert.match(products, /priceKnown: true/);
 assert.ok((products.match(/imageUrl:/g) || []).length >= 11, 'Core catalog products must contain product photography');
-assert.doesNotMatch(products, /КОЛМАН ЕООД/);
+assert.match(products, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(products, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(products, /\+359 88 579 66 13/);
 
@@ -81,12 +81,12 @@ assert.match(extras, /imageUrl:/);
 assert.match(extras, /longDescription:/);
 assert.match(extras, /specs:/);
 
-assert.match(merchant, /SEPANG GROUP/);
-assert.match(merchant, /sepanggroupltd@gmail\.com/i);
+assert.match(merchant, /KOLMAN EOOD/);
+assert.match(merchant, /kolmaneood@abv\.bg/i);
 assert.doesNotMatch(merchant, /\+359 88 503 9931/);
 assert.match(merchant, /PAYPAL_CLIENT_ID/);
-assert.match(merchant, /legalName: 'SEPANG GROUP EOOD'/);
-assert.match(merchant, /sepanggroupltd@gmail\.com/);
+assert.match(merchant, /legalName: 'KOLMAN EOOD'/);
+assert.match(merchant, /kolmaneood@abv\.bg/);
 assert.doesNotMatch(merchant, /\+359 88 579 66 13/);
 
 assert.match(payment, /PayPal/);
