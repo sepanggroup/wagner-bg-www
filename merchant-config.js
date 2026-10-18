@@ -1,7 +1,7 @@
 export const MERCHANT = {
-  legalName: 'SEPANG GROUP EOOD',
-  brand: 'SEPANG GROUP',
-  email: 'sepanggroupltd@gmail.com',
+  legalName: 'KOLMAN EOOD',
+  brand: 'KOLMAN EOOD',
+  email: 'kolmaneood@abv.bg',
   phone: '+359885039931',
   address: 'ул. „Княз Борис I“ № 156, гр. София, България',
   website: 'https://www.wagner-bg.shop/'
