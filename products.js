@@ -1,8 +1,8 @@
 export const STORE = {
   company: {
-    name: 'SEPANG GROUP ЕООД',
+    name: 'КОЛМАН ЕООД',
     brand: 'WAGNER-BG',
-    email: 'sepanggroupltd@gmail.com'
+    email: 'kolmaneood@abv.bg'
   },
   categories: [
     { id: 'airless', name: 'Airless боядисване', desc: 'Професионални системи за дисперсии, латекс, фасадни бои, грундове и други покрития.' },
